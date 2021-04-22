@@ -1,4 +1,4 @@
-package com.csheros.packman.ui.main;
+package com.csheros.packman.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 

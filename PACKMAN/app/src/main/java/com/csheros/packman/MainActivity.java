@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.csheros.packman.ui.main.MainFragment;
+import com.csheros.packman.view.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
 

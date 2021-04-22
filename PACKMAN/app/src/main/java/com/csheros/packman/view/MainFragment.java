@@ -1,4 +1,4 @@
-package com.csheros.packman.ui.main;
+package com.csheros.packman.view;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.csheros.packman.R;
+import com.csheros.packman.viewmodel.MainViewModel;
 
 public class MainFragment extends Fragment {
 
