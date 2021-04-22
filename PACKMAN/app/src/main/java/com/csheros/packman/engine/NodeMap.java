@@ -10,6 +10,8 @@ import lombok.Setter;
 
 public class NodeMap {
 
+    // Todo : Create evaluator & frame calculator for the map then make the model
+
     @Getter
     @Setter
     private NodePosition packManLastPosition;
@@ -17,6 +19,7 @@ public class NodeMap {
     @Setter
     private Direction packManDirection;
 
+    @Getter
     private List<Node[]> nodesMap;
 
     public NodeMap(

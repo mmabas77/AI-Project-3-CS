@@ -47,7 +47,7 @@ public class Node {
      */
     private FrameState frameState;
 
-    public Node(NodePosition position, NodeMap nodeMap) {
+    protected Node(NodePosition position, NodeMap nodeMap) {
         this.type = TYPE.POINT;
         this.direction = Direction.STAND_STILL;
         this.position = position;
