@@ -5,22 +5,19 @@ import com.csheros.packman.utils.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
+@Data
 public class NodeMap {
 
     // Todo : Create evaluator & frame calculator for the map then make the model
 
-    @Getter
-    @Setter
-    private NodePosition packManLastPosition;
-    @Getter
-    @Setter
+    /**
+     * Used to calculate evil creatures path
+     */
+    private NodePosition packManNextPosition;
     private Direction packManDirection;
-
-    @Getter
-    private List<Node[]> nodesMap;
+    private final List<Node[]> nodesMap;
 
     public NodeMap(
             MapSize mapSize,
@@ -30,7 +27,6 @@ public class NodeMap {
             NodePosition[] masterPointPositions
     ) {
         this.nodesMap = new ArrayList<>();
-        this.packManLastPosition = packManPosition;
         this.packManDirection = Direction.STAND_STILL;
 
         constructMap(mapSize);
@@ -42,6 +38,11 @@ public class NodeMap {
     }
 
 
+    public boolean canMoveToPosition(Creature creature , NodePosition nodePosition){
+        // Todo : Implement this!
+        return true;
+    }
+
     private void constructMap(MapSize mapSize) {
         for (int i = 0; i < mapSize.getHeight(); i++) {
             nodesMap.add(new Node[mapSize.getWidth()]);
@@ -52,21 +53,22 @@ public class NodeMap {
         for (int i = 0; i < nodesMap.size(); i++) {
             Node[] row = nodesMap.get(i);
             for (int j = 0; j < row.length; j++) {
-                row[j] = new Node(new NodePosition(i, j), this);
+                row[j] = new Node(this, new NodePosition(i, j));
+                row[j].replaceCreatures(new Creature(Creature.Type.POINT));
             }
         }
     }
 
     private void setPackManPosition(NodePosition packManPosition) {
         Node packManNode = getNodeByPosition(packManPosition);
-        packManNode.setType(Node.TYPE.PACK_MAN);
+        packManNode.replaceCreatures(new Creature(Creature.Type.PACK_MAN));
     }
 
     private void setEvilCreaturesPositions(NodePosition[] evilCreaturesPositions) {
         for (NodePosition evilCreaturePosition :
                 evilCreaturesPositions) {
             Node evilCreatureNode = getNodeByPosition(evilCreaturePosition);
-            evilCreatureNode.setType(Node.TYPE.EVIL_CREATURE);
+            evilCreatureNode.replaceCreatures(new Creature(Creature.Type.EVIL_CREATURE));
         }
     }
 
@@ -74,7 +76,7 @@ public class NodeMap {
         for (NodePosition blockPosition :
                 blocksPositions) {
             Node blockNode = getNodeByPosition(blockPosition);
-            blockNode.setType(Node.TYPE.BLOCK);
+            blockNode.replaceCreatures(new Creature(Creature.Type.BLOCK));
         }
     }
 
@@ -82,7 +84,7 @@ public class NodeMap {
         for (NodePosition masterPointPosition :
                 masterPointPositions) {
             Node masterPointNode = getNodeByPosition(masterPointPosition);
-            masterPointNode.setType(Node.TYPE.MASTER_POINT);
+            masterPointNode.replaceCreatures(new Creature(Creature.Type.MASTER_POINT));
         }
     }
 
