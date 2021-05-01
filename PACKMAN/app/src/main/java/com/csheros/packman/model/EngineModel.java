@@ -19,7 +19,7 @@ public class EngineModel {
     private static EngineModel instance;
 
 
-    public static EngineModel getInstance(Application application) {
+    public synchronized static EngineModel getInstance(Application application) {
         if (instance == null)
             instance = new EngineModel(application);
         return instance;
@@ -38,17 +38,12 @@ public class EngineModel {
     /**
      * Live Data
      */
+
     @Getter
     private MutableLiveData<Engine> engineLiveData;
 
     /**
      * Start game
-     *
-     * @param nodeMap
-     * @param frameRate
-     * @param masterPointScore
-     * @param masterPointValidTime
-     * @param evilCreatureScore
      */
     private Worker worker;
 
