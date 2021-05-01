@@ -14,13 +14,26 @@ public class Creature {
     private final Type type;
     private Direction currentDirection;
 
+    /**
+     * Specific for evil creatures
+     */
+    boolean isReversed;
+
     public Creature(Type type) {
         this.type = type;
         this.currentDirection = Direction.STAND_STILL;
+        this.isReversed = false;
     }
 
 
-    public Direction getNextDirection() {
+    public NodePosition getNextPosition() {
+        Direction nextDirection = getNextDirection();
+        return NodePosition.calculateFromPositionWithDirection(
+                getNode().getPosition(), nextDirection
+        );
+    }
+
+    private Direction getNextDirection() {
         switch (this.getType()) {
             case PACK_MAN:
                 return getNode().getNodeMap().getPackManDirection();

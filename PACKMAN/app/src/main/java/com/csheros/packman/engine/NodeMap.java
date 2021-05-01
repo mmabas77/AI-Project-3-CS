@@ -3,6 +3,7 @@ package com.csheros.packman.engine;
 import com.csheros.packman.utils.Direction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import lombok.Data;
@@ -38,9 +39,24 @@ public class NodeMap {
     }
 
 
-    public boolean canMoveToPosition(Creature creature , NodePosition nodePosition){
+    public List<Node> getAllNodes() {
+        List<Node> nodes = new ArrayList<>();
+        for (Node[] nodesArr : getNodesMap()) {
+            nodes.addAll(Arrays.asList(nodesArr));
+        }
+        return nodes;
+    }
+
+    private boolean canMoveToPosition(Creature creature, NodePosition nodePosition) {
         // Todo : Implement this!
         return true;
+    }
+
+    public void moveToPositionIfPossible(Creature creature, NodePosition nodePosition) {
+        if(!canMoveToPosition(creature,nodePosition))
+            return;
+        creature.getNode().removeCreature(creature);
+        getNodeByPosition(nodePosition).addCreature(creature);
     }
 
     private void constructMap(MapSize mapSize) {
