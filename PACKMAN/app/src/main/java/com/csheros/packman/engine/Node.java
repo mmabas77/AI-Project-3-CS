@@ -83,4 +83,11 @@ public class Node {
         return check;
     }
 
+    public boolean hasBlock() {
+        for (Creature creature : creatures) {
+            if (creature.getType() == Creature.Type.BLOCK)
+                return true;
+        }
+        return false;
+    }
 }

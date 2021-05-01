@@ -16,9 +16,10 @@ public class NodeMap {
     /**
      * Used to calculate evil creatures path
      */
-    private NodePosition packManNextPosition;
     private Direction packManDirection;
     private final List<Node[]> nodesMap;
+    private final MapSize mapSize;
+
 
     public NodeMap(
             MapSize mapSize,
@@ -27,6 +28,7 @@ public class NodeMap {
             NodePosition[] blocksPositions,
             NodePosition[] masterPointPositions
     ) {
+        this.mapSize = mapSize;
         this.nodesMap = new ArrayList<>();
         this.packManDirection = Direction.STAND_STILL;
 
@@ -48,12 +50,15 @@ public class NodeMap {
     }
 
     private boolean canMoveToPosition(Creature creature, NodePosition nodePosition) {
-        // Todo : Implement this!
-        return true;
+        boolean allowedInSize = mapSize
+                .insideMap(nodePosition.getCol(), nodePosition.getCol());
+        boolean hasBlock = getNodeByPosition(nodePosition).hasBlock();
+
+        return allowedInSize && !hasBlock;
     }
 
     public void moveToPositionIfPossible(Creature creature, NodePosition nodePosition) {
-        if(!canMoveToPosition(creature,nodePosition))
+        if (!canMoveToPosition(creature, nodePosition))
             return;
         creature.getNode().removeCreature(creature);
         getNodeByPosition(nodePosition).addCreature(creature);
