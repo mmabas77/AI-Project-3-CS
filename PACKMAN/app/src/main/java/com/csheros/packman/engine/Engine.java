@@ -46,7 +46,7 @@ public class Engine {
         this.masterPointFrameCounter = 0;
     }
 
-    public void getNextState() {
+    public void nextStateTransaction() {
         List<Node> allNodes = nodeMap.getAllNodes();
         List<Creature> allMovableCreatures = getAllMovableCreatures(allNodes);
         createNextFrame(allMovableCreatures);
