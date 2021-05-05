@@ -42,7 +42,7 @@ public class EngineModel {
      */
 
     @Getter
-    private MutableLiveData<GameState> gameStateMutableLiveData;
+    private final MutableLiveData<GameState> gameStateMutableLiveData;
 
     /**
      * Start game
