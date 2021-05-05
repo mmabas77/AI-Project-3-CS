@@ -4,9 +4,9 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.csheros.packman.engine.Engine;
 import com.csheros.packman.engine.NodeMap;
 import com.csheros.packman.model.EngineModel;
+import com.csheros.packman.pojo.GameState;
 
 public class EngineRepo {
 
@@ -47,7 +47,7 @@ public class EngineRepo {
     /**
      * Live Data Getters
      */
-    public LiveData<Engine> getEngineLiveData() {
-        return engineModel.getEngineLiveData();
+    public LiveData<GameState> getGameStateLiveData() {
+        return engineModel.getGameStateMutableLiveData();
     }
 }
