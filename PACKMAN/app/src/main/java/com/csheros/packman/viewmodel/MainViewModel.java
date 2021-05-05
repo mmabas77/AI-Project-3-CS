@@ -1,7 +1,15 @@
 package com.csheros.packman.viewmodel;
 
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
 
-public class MainViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+
+import org.jetbrains.annotations.NotNull;
+
+public class MainViewModel extends AndroidViewModel {
+
+    public MainViewModel(@NonNull @NotNull Application application) {
+        super(application);
+    }
 }
