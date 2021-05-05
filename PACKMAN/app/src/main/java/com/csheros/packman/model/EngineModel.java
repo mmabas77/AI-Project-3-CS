@@ -34,6 +34,7 @@ public class EngineModel {
 
     private EngineModel(Application application) {
         this.application = application;
+        gameStateMutableLiveData = new MutableLiveData<>();
     }
 
     /**
