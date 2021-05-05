@@ -68,15 +68,8 @@ public class EngineModel {
         @Override
         public void run() {
             while (!isInterrupted()) {
-                engine.nextStateTransaction();
-                gameStateMutableLiveData.postValue(
-                        new GameState(engine,
-                                true,
-                                true,
-                                true,
-                                true,
-                                true)
-                );
+                GameState gameState = engine.nextStateTransaction();
+                gameStateMutableLiveData.postValue(gameState);
                 int frameRate = engine.getFrameRate();
                 try {
                     sleep(1000 / frameRate);
