@@ -1,6 +1,5 @@
 package com.csheros.packman.view;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -14,35 +13,27 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.csheros.packman.R;
-import com.csheros.packman.engine.NodeMap;
-import com.csheros.packman.viewmodel.MainViewModel;
+import com.csheros.packman.viewmodel.StarterFragmentViewModel;
 
-public class MainFragment extends Fragment {
+public class StarterFragment extends Fragment {
 
-    private MainViewModel mViewModel;
+    private StarterFragmentViewModel mViewModel;
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
+    public static StarterFragment newInstance() {
+        return new StarterFragment();
     }
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.main_fragment, container, false);
-        return view;
+        return inflater.inflate(R.layout.starter_fragement_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mViewModel.getNodeMapLiveData().observe(getViewLifecycleOwner(),
-                nodeMap -> {
-
-                });
-
-        mViewModel.createNodeMap(0);
+        mViewModel = new ViewModelProvider(this).get(StarterFragmentViewModel.class);
+        // TODO: Use the ViewModel
     }
 
 }
