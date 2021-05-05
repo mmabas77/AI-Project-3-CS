@@ -67,12 +67,13 @@ public class EngineModel {
 
         @Override
         public void run() {
+            int frameRate = engine.getFrameRate();
+            long sleepTime = 1000 / frameRate;
             while (!isInterrupted()) {
                 GameState gameState = engine.nextStateTransaction();
                 gameStateMutableLiveData.postValue(gameState);
-                int frameRate = engine.getFrameRate();
                 try {
-                    sleep(1000 / frameRate);
+                    sleep(sleepTime);
                 } catch (InterruptedException ex) {
                     break;
                 }
