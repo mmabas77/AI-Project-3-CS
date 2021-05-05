@@ -27,7 +27,7 @@ public class EngineRepo {
     private final Application application;
     private final EngineModel engineModel;
 
-    public EngineRepo(Application application) {
+    private EngineRepo(Application application) {
         this.application = application;
         this.engineModel = EngineModel.getInstance(application);
     }
