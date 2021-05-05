@@ -1,5 +1,6 @@
 package com.csheros.packman.view;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.csheros.packman.R;
+import com.csheros.packman.engine.NodeMap;
 import com.csheros.packman.viewmodel.MainViewModel;
 
 public class MainFragment extends Fragment {
@@ -27,14 +29,20 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_fragment, container, false);
+        View view = inflater.inflate(R.layout.main_fragment, container, false);
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        // TODO: Use the ViewModel
+        mViewModel.getNodeMapLiveData().observe(getViewLifecycleOwner(),
+                nodeMap -> {
+
+                });
+
+        mViewModel.createNodeMap(0);
     }
 
 }
