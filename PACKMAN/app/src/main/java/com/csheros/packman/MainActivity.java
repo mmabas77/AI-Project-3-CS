@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.csheros.packman.view.MainFragment;
+import com.csheros.packman.view.StarterFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,9 +13,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
+                    .replace(R.id.container, StarterFragment.newInstance())
                     .commitNow();
         }
     }

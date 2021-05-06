@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.csheros.packman.R;
 import com.csheros.packman.viewmodel.StarterFragmentViewModel;
@@ -26,7 +27,33 @@ public class StarterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.starter_fragement_fragment, container, false);
+        View view = inflater.inflate(R.layout.starter_fragement_fragment, container, false);
+
+        Button btn_Start_fragment = (Button)view.findViewById(R.id.start_game);
+        Button btn_exit_fragment = (Button)view.findViewById(R.id.end_game);
+
+        btn_Start_fragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, MainFragment.newInstance())
+                        .commitNow();
+            }
+        });
+
+        btn_exit_fragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                moveTaskToBack(true);
+                andoroid.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+                 */
+            }
+        });
+
+        return view;
     }
 
     @Override

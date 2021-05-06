@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PACK-MAN</string>
+    <string name="Start_Game">Start</string>
+    <string name="End_Game">End</string>
 </resources>
