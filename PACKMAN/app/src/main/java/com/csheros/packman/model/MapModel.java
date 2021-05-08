@@ -33,6 +33,7 @@ public class MapModel {
 
     private MapModel(Application application) {
         this.application = application;
+        nodeMapLiveData = new MutableLiveData<>();
     }
 
     /**
