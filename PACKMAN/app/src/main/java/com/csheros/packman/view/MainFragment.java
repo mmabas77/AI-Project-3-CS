@@ -21,6 +21,8 @@ import com.csheros.packman.engine.Node;
 import com.csheros.packman.engine.NodeMap;
 import com.csheros.packman.viewmodel.MainViewModel;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainFragment extends Fragment {
@@ -99,7 +101,9 @@ public class MainFragment extends Fragment {
         nodeView.setGravity(Gravity.CENTER);
 
         // Add Images
-        for (Creature creature : node.getCreatures()) {
+        List<Creature> creatures = new ArrayList<>(node.getCreatures());
+        Collections.reverse(creatures);
+        for (Creature creature : creatures) {
             ImageView img = new ImageView(getContext());
 
             LayoutParams params = new LayoutParams(
