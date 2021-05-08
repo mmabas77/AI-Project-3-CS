@@ -95,6 +95,9 @@ public class MainFragment extends Fragment {
             img.setLayoutParams(params);
 
             switch (creature.getType()) {
+                case BLOCK:
+                    img.setImageResource(R.drawable.icon_right);
+                    break;
                 default:
                     img.setImageResource(R.drawable.ic_dot);
             }
@@ -108,11 +111,13 @@ public class MainFragment extends Fragment {
     private LinearLayout createRowLinear() {
         LinearLayout layoutRow = new LinearLayout(getContext());
         layoutRow.setOrientation(LinearLayout.HORIZONTAL);
+        LayoutParams params = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT
+        );
+        params.weight = 1;
         layoutRow.setLayoutParams(
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT
-                )
+                params
         );
         return layoutRow;
     }
