@@ -31,6 +31,8 @@ public class MainFragment extends Fragment {
         return new MainFragment();
     }
 
+    private LinearLayout gameWorld;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -41,7 +43,7 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.main_fragment, container, false);
 
         // Get views
-
+        gameWorld = view.findViewById(R.id.gameWorld);
 
         return view;
     }
@@ -76,6 +78,7 @@ public class MainFragment extends Fragment {
                 LinearLayout nodeLayout = createNodeLayout(node);
                 layoutRow.addView(nodeLayout);
             }
+            gameWorld.addView(layoutRow);
         }
     }
 
@@ -88,7 +91,7 @@ public class MainFragment extends Fragment {
         for (Creature creature : node.getCreatures()) {
             ImageView img = new ImageView(getContext());
             LayoutParams params = new LayoutParams(
-                    LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             img.setLayoutParams(params);
 
             switch (creature.getType()) {
