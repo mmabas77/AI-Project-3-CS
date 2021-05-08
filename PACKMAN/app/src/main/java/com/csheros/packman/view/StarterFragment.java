@@ -45,11 +45,7 @@ public class StarterFragment extends Fragment {
         btn_exit_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                moveTaskToBack(true);
-                andoroid.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
-                 */
+                getActivity().finish();
             }
         });
 
