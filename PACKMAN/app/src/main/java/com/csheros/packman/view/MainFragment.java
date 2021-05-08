@@ -91,7 +91,7 @@ public class MainFragment extends Fragment {
         for (Creature creature : node.getCreatures()) {
             ImageView img = new ImageView(getContext());
             LayoutParams params = new LayoutParams(
-                    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             img.setLayoutParams(params);
 
             switch (creature.getType()) {
