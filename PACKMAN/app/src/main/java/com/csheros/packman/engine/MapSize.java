@@ -10,6 +10,8 @@ public class MapSize {
     private int height;
 
     public boolean insideMap(int col, int row) {
-        return col < width && row < height;
+        boolean allowedCol = col >= 0 && col < width;
+        boolean allowedRow = row >= 0 && row < height;
+        return allowedCol && allowedRow;
     }
 }
