@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.csheros.packman.R;
 import com.csheros.packman.viewmodel.MainViewModel;
@@ -29,13 +30,19 @@ public class MainFragment extends Fragment {
                 ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         View view = inflater.inflate(R.layout.main_fragment, container, false);
+
+        // Get views
+
+
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mViewModel = new ViewModelProvider.
+                AndroidViewModelFactory(getActivity().getApplication())
+                .create(MainViewModel.class);
 //        mViewModel.getNodeMapLiveData().observe(getViewLifecycleOwner(),
 //                nodeMap -> {
 //

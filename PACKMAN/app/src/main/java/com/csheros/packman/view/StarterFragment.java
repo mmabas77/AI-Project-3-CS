@@ -59,7 +59,9 @@ public class StarterFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(StarterFragmentViewModel.class);
+        mViewModel = new ViewModelProvider.
+                AndroidViewModelFactory(getActivity().getApplication())
+                .create(StarterFragmentViewModel.class);
         // TODO: Use the ViewModel
     }
 
