@@ -8,8 +8,8 @@ public interface NodeMapGenerator {
 
     static NodeMap createStaticNodeMap() {
         return new NodeMap(
-                new MapSize(25, 25),
-                new NodePosition(13, 13),
+                new MapSize(7, 7),
+                new NodePosition(1, 4),
                 new NodePosition[]{new NodePosition(1, 1)},
                 new NodePosition[]{new NodePosition(1, 2)},
                 new NodePosition[]{new NodePosition(1, 3)}
