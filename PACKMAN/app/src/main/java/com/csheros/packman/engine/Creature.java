@@ -37,13 +37,16 @@ public class Creature {
     private Direction getNextDirection() {
         switch (this.getType()) {
             case PACK_MAN:
-                return getNode().getNodeMap().getPackManDirection();
+                currentDirection = getNode().getNodeMap().getPackManDirection();
+                break;
             case EVIL_CREATURE:
                 // Todo : Implement this!
-                return Direction.getRandomDirection();
+                currentDirection = Direction.getRandomDirection();
+                break;
             default:
-                return Direction.STAND_STILL;
+                currentDirection = Direction.STAND_STILL;
         }
+        return currentDirection;
     }
 
     public int getImgAsset() {
