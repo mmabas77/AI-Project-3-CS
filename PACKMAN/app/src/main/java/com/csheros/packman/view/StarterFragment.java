@@ -2,6 +2,7 @@ package com.csheros.packman.view;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,8 @@ public class StarterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.starter_fragement_fragment, container, false);
+        getActivity().setRequestedOrientation(
+                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Button btn_Start_fragment = (Button)view.findViewById(R.id.start_game);
         Button btn_exit_fragment = (Button)view.findViewById(R.id.end_game);
