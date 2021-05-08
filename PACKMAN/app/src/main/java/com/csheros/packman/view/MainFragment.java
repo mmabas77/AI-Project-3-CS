@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.csheros.packman.R;
 import com.csheros.packman.engine.Creature;
 import com.csheros.packman.engine.Node;
 import com.csheros.packman.engine.NodeMap;
+import com.csheros.packman.pojo.GameState;
 import com.csheros.packman.utils.Direction;
 import com.csheros.packman.viewmodel.MainViewModel;
 
@@ -37,6 +39,7 @@ public class MainFragment extends Fragment {
 
     private LinearLayout gameWorld;
     private Button btnUp, btnDown, btnRight, btnLeft;
+    private TextView txtLevel, txtScore;
 
     @Nullable
     @Override
@@ -49,6 +52,7 @@ public class MainFragment extends Fragment {
 
         // Get views
         gameWorld = view.findViewById(R.id.gameWorld);
+
         btnUp = view.findViewById(R.id.btnUp);
         btnDown = view.findViewById(R.id.btnDown);
         btnLeft = view.findViewById(R.id.btnLeft);
@@ -56,6 +60,11 @@ public class MainFragment extends Fragment {
         for (Button button : new Button[]{btnUp, btnRight, btnLeft, btnDown}) {
             button.setOnClickListener(this::setPackManDirection);
         }
+
+        // Statistics
+        txtLevel = view.findViewById(R.id.txtLevel);
+        txtScore = view.findViewById(R.id.txtScore);
+
         return view;
     }
 
@@ -70,6 +79,7 @@ public class MainFragment extends Fragment {
         mViewModel.getGameStateLiveData().observe(getViewLifecycleOwner(),
                 gameState -> {
                     nodeMapReceived(gameState.getEngine().getNodeMap());
+                    updateStatistics(gameState);
                 });
         mViewModel.getNodeMapLiveData().observe(getViewLifecycleOwner(),
                 nodeMap -> mViewModel.startGame(
@@ -84,8 +94,14 @@ public class MainFragment extends Fragment {
         mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
                 level -> {
                     mViewModel.createNodeMap(level);
+                    txtLevel.setText(String.valueOf(level));
                 });
 
+    }
+
+    private void updateStatistics(GameState gameState) {
+        int score = gameState.getEngine().getScore();
+        txtScore.setText(String.valueOf(score));
     }
 
     private NodeMap currentMap;
