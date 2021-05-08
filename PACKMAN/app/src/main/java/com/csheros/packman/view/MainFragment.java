@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -19,6 +20,7 @@ import com.csheros.packman.R;
 import com.csheros.packman.engine.Creature;
 import com.csheros.packman.engine.Node;
 import com.csheros.packman.engine.NodeMap;
+import com.csheros.packman.utils.Direction;
 import com.csheros.packman.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class MainFragment extends Fragment {
     }
 
     private LinearLayout gameWorld;
+    private Button btnUp, btnDown, btnRight, btnLeft;
 
     @Nullable
     @Override
@@ -46,7 +49,13 @@ public class MainFragment extends Fragment {
 
         // Get views
         gameWorld = view.findViewById(R.id.gameWorld);
-
+        btnUp = view.findViewById(R.id.btnUp);
+        btnDown = view.findViewById(R.id.btnDown);
+        btnLeft = view.findViewById(R.id.btnLeft);
+        btnRight = view.findViewById(R.id.btnRight);
+        for (Button button : new Button[]{btnUp, btnRight, btnLeft, btnDown}) {
+            button.setOnClickListener(this::setPackManDirection);
+        }
         return view;
     }
 
@@ -79,8 +88,11 @@ public class MainFragment extends Fragment {
 
     }
 
+    private NodeMap currentMap;
+
     private void nodeMapReceived(NodeMap nodeMap) {
         gameWorld.removeAllViews();
+        currentMap = nodeMap;
         List<Node[]> rows = nodeMap.getNodesMap();
         for (Node[] row : rows) {
             // Linear for row
@@ -132,4 +144,20 @@ public class MainFragment extends Fragment {
         return layoutRow;
     }
 
+    public void setPackManDirection(View view) {
+        switch (view.getId()) {
+            case R.id.btnUp:
+                currentMap.setPackManDirection(Direction.UP);
+                break;
+            case R.id.btnDown:
+                currentMap.setPackManDirection(Direction.DOWN);
+                break;
+            case R.id.btnLeft:
+                currentMap.setPackManDirection(Direction.LEFT);
+                break;
+            case R.id.btnRight:
+                currentMap.setPackManDirection(Direction.RIGHT);
+                break;
+        }
+    }
 }
