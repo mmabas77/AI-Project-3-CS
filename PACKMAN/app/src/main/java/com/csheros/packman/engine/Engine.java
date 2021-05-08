@@ -1,5 +1,6 @@
 package com.csheros.packman.engine;
 
+import com.csheros.packman.pojo.GameState;
 import com.csheros.packman.pojo.NodeTypesCheck;
 
 import java.util.ArrayList;
@@ -32,6 +33,11 @@ public class Engine {
      */
     private int masterPointFrameCounter;
 
+    /**
+     * Next Game State
+     */
+    private GameState nextState;
+
     public Engine(NodeMap nodeMap, int frameRate, int masterPointScore, int masterPointValidTime, int evilCreatureScore) {
         // From model
         this.nodeMap = nodeMap;
@@ -46,12 +52,14 @@ public class Engine {
         this.masterPointFrameCounter = 0;
     }
 
-    public void nextStateTransaction() {
+    public GameState nextStateTransaction() {
+        this.nextState = new GameState(this);
         List<Node> allNodes = nodeMap.getAllNodes();
         List<Creature> allMovableCreatures = getAllMovableCreatures(allNodes);
         createNextFrame(allMovableCreatures);
         evaluateCollisions(allNodes, allMovableCreatures);
         evaluateMasterPointValidTime(allMovableCreatures);
+        return this.nextState;
     }
 
     private void evaluateMasterPointValidTime(List<Creature> allMovableCreatures) {
@@ -69,12 +77,14 @@ public class Engine {
             if (creature != null)
                 creature.setReversed(true);
         }
+        this.nextState.setReverseCreatures(true);
     }
 
     private void unReverseCreatures(List<Creature> allMovableCreatures) {
         for (Creature creature : allMovableCreatures) {
             creature.setReversed(false);
         }
+        this.nextState.setUnReverseCreatures(true);
     }
 
     private List<Creature> getAllMovableCreatures(List<Node> allNodes) {
@@ -112,11 +122,13 @@ public class Engine {
 
     private void cachedPoint(Node node, NodeTypesCheck check) {
         killCreatures(node, check.getPointCreatures(), 1);
+        this.nextState.setAtePoint(true);
     }
 
     private void cachedMasterPoint(Node node, List<Creature> allMovableCreatures, NodeTypesCheck check) {
         killCreatures(node, check.getMasterPointCreatures(), masterPointScore);
         reverseCreatures(allMovableCreatures);
+        this.nextState.setAteMasterPoint(true);
     }
 
     private void packManCaught(Node node, NodeTypesCheck check) {
@@ -124,6 +136,7 @@ public class Engine {
             packManDies(node, check);
         } else {
             killCreatures(node, check.getEvilCreatures(), evilCreatureScore);
+            this.nextState.setAteEvilCreature(true);
         }
     }
 
@@ -139,5 +152,6 @@ public class Engine {
         Creature packMan = check.getPackMan();
         node.removeCreature(packMan);
         alive = false;
+        this.nextState.setPackManDied(true);
     }
 }

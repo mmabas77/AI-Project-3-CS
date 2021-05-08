@@ -34,6 +34,7 @@ public class EngineModel {
 
     private EngineModel(Application application) {
         this.application = application;
+        gameStateMutableLiveData = new MutableLiveData<>();
     }
 
     /**
@@ -41,7 +42,7 @@ public class EngineModel {
      */
 
     @Getter
-    private MutableLiveData<GameState> gameStateMutableLiveData;
+    private final MutableLiveData<GameState> gameStateMutableLiveData;
 
     /**
      * Start game
@@ -67,19 +68,13 @@ public class EngineModel {
 
         @Override
         public void run() {
+            int frameRate = engine.getFrameRate();
+            long sleepTime = 1000 / frameRate;
             while (!isInterrupted()) {
-                engine.nextStateTransaction();
-                gameStateMutableLiveData.postValue(
-                        new GameState(engine,
-                                true,
-                                true,
-                                true,
-                                true,
-                                true)
-                );
-                int frameRate = engine.getFrameRate();
+                GameState gameState = engine.nextStateTransaction();
+                gameStateMutableLiveData.postValue(gameState);
                 try {
-                    sleep(1000 / frameRate);
+                    sleep(sleepTime);
                 } catch (InterruptedException ex) {
                     break;
                 }
