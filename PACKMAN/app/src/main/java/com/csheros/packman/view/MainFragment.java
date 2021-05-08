@@ -76,7 +76,7 @@ public class MainFragment extends Fragment {
                         nodeMap,
                         2,
                         10,
-                        5,
+                        20,
                         200
                 )
         );

@@ -10,7 +10,10 @@ public interface NodeMapGenerator {
         return new NodeMap(
                 new MapSize(15, 15),
                 new NodePosition(1, 4),
-                new NodePosition[]{new NodePosition(1, 1)},
+                new NodePosition[]{
+                        new NodePosition(1, 1),
+                        new NodePosition(5, 1)
+                },
                 new NodePosition[]{
                         new NodePosition(1, 2),
                         new NodePosition(2, 2),
