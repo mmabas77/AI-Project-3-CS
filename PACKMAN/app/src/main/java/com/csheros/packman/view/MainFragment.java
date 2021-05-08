@@ -56,8 +56,18 @@ public class MainFragment extends Fragment {
                 AndroidViewModelFactory(getActivity().getApplication())
                 .create(MainViewModel.class);
 
+        mViewModel.getGameStateLiveData().observe(getViewLifecycleOwner(),
+                gameState -> {
+                    nodeMapReceived(gameState.getEngine().getNodeMap());
+                });
         mViewModel.getNodeMapLiveData().observe(getViewLifecycleOwner(),
-                this::nodeMapReceived
+                nodeMap -> mViewModel.startGame(
+                        nodeMap,
+                        2,
+                        10,
+                        5,
+                        200
+                )
         );
 
         mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
@@ -68,6 +78,7 @@ public class MainFragment extends Fragment {
     }
 
     private void nodeMapReceived(NodeMap nodeMap) {
+        gameWorld.removeAllViews();
         List<Node[]> rows = nodeMap.getNodesMap();
         for (Node[] row : rows) {
             // Linear for row
