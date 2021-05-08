@@ -48,4 +48,12 @@ public class NodeTypesCheck {
     public boolean hasPoint() {
         return !pointCreatures.isEmpty();
     }
+
+    public boolean hasEvilCreatureCanEatPackMan() {
+        for (Creature evilCreature : getEvilCreatures()) {
+            if (!evilCreature.isReversed())
+                return true;
+        }
+        return false;
+    }
 }

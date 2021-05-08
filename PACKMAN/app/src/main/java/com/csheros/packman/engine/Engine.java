@@ -49,7 +49,7 @@ public class Engine {
         this.alive = true;
         this.score = 0;
         this.reversed = false;
-        this.masterPointFrameCounter = 0;
+        this.masterPointFrameCounter = 1;
     }
 
     public GameState nextStateTransaction() {
@@ -65,14 +65,16 @@ public class Engine {
     private void evaluateMasterPointValidTime(List<Creature> allMovableCreatures) {
         if (!reversed)
             return;
-
-        int passedSec = masterPointFrameCounter / frameRate;
-        if (passedSec > masterPointValidTime) {
+        int passedSec = (masterPointFrameCounter + 1) / frameRate;
+        if (passedSec >= masterPointValidTime) {
             unReverseCreatures(allMovableCreatures);
         }
+        masterPointFrameCounter = (masterPointFrameCounter + 1) %
+                (masterPointValidTime * frameRate);
     }
 
     private void reverseCreatures(List<Creature> allMovableCreatures) {
+        reversed = true;
         for (Creature creature : allMovableCreatures) {
             if (creature != null)
                 creature.setReversed(true);
@@ -81,6 +83,7 @@ public class Engine {
     }
 
     private void unReverseCreatures(List<Creature> allMovableCreatures) {
+        reversed = false;
         for (Creature creature : allMovableCreatures) {
             creature.setReversed(false);
         }
@@ -132,7 +135,7 @@ public class Engine {
     }
 
     private void packManCaught(Node node, NodeTypesCheck check) {
-        if (!reversed) {
+        if (check.hasEvilCreatureCanEatPackMan()) {
             packManDies(node, check);
         } else {
             killCreatures(node, check.getEvilCreatures(), evilCreatureScore);
