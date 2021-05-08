@@ -90,17 +90,12 @@ public class MainFragment extends Fragment {
         // Add Images
         for (Creature creature : node.getCreatures()) {
             ImageView img = new ImageView(getContext());
+
             LayoutParams params = new LayoutParams(
                     LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-            img.setLayoutParams(params);
 
-            switch (creature.getType()) {
-                case BLOCK:
-                    img.setImageResource(R.drawable.icon_right);
-                    break;
-                default:
-                    img.setImageResource(R.drawable.ic_dot);
-            }
+            img.setLayoutParams(params);
+            img.setImageResource(creature.getImgAsset());
 
             nodeView.addView(img);
         }
