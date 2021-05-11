@@ -1,6 +1,9 @@
 package com.csheros.packman.view;
 
+import android.app.Dialog;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,6 +43,7 @@ public class MainFragment extends Fragment {
     private LinearLayout gameWorld;
     private Button btnUp, btnDown, btnRight, btnLeft;
     private TextView txtLevel, txtScore;
+    Dialog dialog ;
 
     @Nullable
     @Override
@@ -64,6 +68,9 @@ public class MainFragment extends Fragment {
         // Statistics
         txtLevel = view.findViewById(R.id.txtLevel);
         txtScore = view.findViewById(R.id.txtScore);
+
+        // init dialog
+        dialog =new Dialog(getContext());
 
         return view;
     }
@@ -96,6 +103,11 @@ public class MainFragment extends Fragment {
                     mViewModel.createNodeMap(level);
                     txtLevel.setText(String.valueOf(level));
                 });
+
+        //show Dialog
+        mViewModel.getGameStateLiveData().observe(getViewLifecycleOwner(),gameState -> {
+            showDialog(gameState);
+        });
 
     }
 
@@ -176,4 +188,21 @@ public class MainFragment extends Fragment {
                 break;
         }
     }
+
+    public void showDialog(GameState gameState){
+     if(gameState.isPackManDied()){
+         dialog.setContentView(R.layout.loser_dialog);
+         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+         ImageView replay= dialog.findViewById(R.id.replay);
+         dialog.show();
+     }
+else {
+         dialog.setContentView(R.layout.winner_dialog);
+         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+         dialog.show();
+
+     }
+
+    }
+
 }
