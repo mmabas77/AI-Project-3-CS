@@ -1,6 +1,7 @@
 package com.csheros.packman.engine;
 
 import com.csheros.packman.R;
+import com.csheros.packman.ai.DFS;
 import com.csheros.packman.utils.Direction;
 
 import lombok.Data;
@@ -44,7 +45,11 @@ public class Creature {
                 break;
             case EVIL_CREATURE:
                 // Todo : Implement this!
-                currentDirection = Direction.getRandomDirection();
+                currentDirection = new DFS().getNextMoveDirection(
+                        getNode().getPosition(),
+                        getFirstNode().getNodeMap().getPackManPosition(),
+                        node.getNodeMap()
+                );
                 break;
             default:
                 currentDirection = Direction.STAND_STILL;
