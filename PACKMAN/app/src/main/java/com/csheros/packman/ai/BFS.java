@@ -5,49 +5,51 @@ import com.csheros.packman.engine.NodePosition;
 import com.csheros.packman.utils.Direction;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
 import lombok.Data;
 
-public class DFS implements NextMoveCalculator {
+public class BFS implements NextMoveCalculator {
 
     @Override
     public Direction getNextMoveDirection(NodePosition srcNodePosition, NodePosition targetNodePosition, NodeMap nodeMap) {
         // Node Holders
-        Stack<DFSNode> DFS_Stack = new Stack<>();
+        LinkedList<DFSNode> DFS_Queue = new LinkedList<>();
         List<DFSNode> visitedNodes = new ArrayList<>();
-        // Add root to stack
+        // Add root to stack & visited
         DFSNode root = new DFSNode(nodeMap, srcNodePosition);
-        DFS_Stack.push(root);
+        DFS_Queue.add(root);
+        visitedNodes.add(root);
         // Loop on stack to get direction
-        while (!DFS_Stack.isEmpty()) {
+        while (!DFS_Queue.isEmpty()) {
             // Get current node
-            DFSNode currentNode = DFS_Stack.pop();
+            DFSNode currentNode = DFS_Queue.removeFirst();
             // Check goal
             if (currentNode.getState().equals(targetNodePosition)) {
                 return currentNode.getPathDirection();
             }
-            // Add to visited
-            visitedNodes.add(currentNode);
             // Add children to stack if not visited
             List<DFSNode> children = currentNode.getChildren();
             for (DFSNode child : children) {
-                if (!visitedNodes.contains(child))
-                    DFS_Stack.push(child);
+                if (!visitedNodes.contains(child)) {
+                    DFS_Queue.addLast(child);
+                    // Add to visited
+                    visitedNodes.add(child);
+                }
             }
         }
         return Direction.STAND_STILL;
     }
 
     @Data
-    class DFSNode {
+    static class DFSNode {
         // Extra
         private NodeMap nodeMap;
         // Path Data
         private DFSNode parent;
         // Self Data
-        private int depth; // For path cost also (step cost = 1)
         private Direction action;
         private NodePosition state;
 
@@ -59,7 +61,6 @@ public class DFS implements NextMoveCalculator {
             this.nodeMap = nodeMap;
             // Root Generator
             this.parent = null;
-            this.depth = 0;
             this.action = Direction.STAND_STILL;
             // Received Position
             this.state = state;
@@ -80,7 +81,6 @@ public class DFS implements NextMoveCalculator {
             this.nodeMap = nodeMap;
             // Root Generator
             this.parent = parent;
-            this.depth = parent.depth + 1;
             this.action = action;
             // Received Position
             this.state = state;
@@ -114,13 +114,31 @@ public class DFS implements NextMoveCalculator {
         }
 
         public Direction getPathDirection() {
-            List<DFSNode> pathNodes = new ArrayList<>();
+            Stack<DFSNode> pathNodes = new Stack<>();
             DFSNode current = this;
             while (current.parent != null) {
-                pathNodes.add(current);
+                pathNodes.push(current);
                 current = current.parent;
             }
-            return pathNodes.get(pathNodes.size() - 1).getAction();
+            if (pathNodes.size() > 0) {
+                System.out.println("Path ...");
+                for (DFSNode pathNode : pathNodes) {
+                    System.out.println("Row:" + pathNode.getState().getRow() +
+                            "  Col:" + pathNode.getState().getCol() +
+                            " Direction:" + pathNode.getAction());
+                }
+                return pathNodes.pop().getAction();
+            }
+            return Direction.STAND_STILL;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            DFSNode node = (DFSNode) o;
+            return node.getState().equals(this.getState());
         }
     }
 

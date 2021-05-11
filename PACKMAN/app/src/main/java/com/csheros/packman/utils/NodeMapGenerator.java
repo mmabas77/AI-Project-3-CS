@@ -38,7 +38,7 @@ public interface NodeMapGenerator {
                         ".--....\n" +
                         "..p....\n" +
                         ".--....\n" +
-                        ".|x....\n" +
+                        ".|.....\n" +
                         "0|....0\n"
         );
     }
