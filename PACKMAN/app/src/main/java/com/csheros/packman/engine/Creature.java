@@ -47,7 +47,7 @@ public class Creature {
                 // Todo : Implement this!
                 currentDirection = new DFS().getNextMoveDirection(
                         getNode().getPosition(),
-                        getFirstNode().getNodeMap().getPackManPosition(),
+                        getNode().getNodeMap().getPackManPosition(),
                         node.getNodeMap()
                 );
                 break;
