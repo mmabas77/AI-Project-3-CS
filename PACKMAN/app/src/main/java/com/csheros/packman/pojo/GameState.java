@@ -12,7 +12,9 @@ public class GameState {
             atePoint,
             ateMasterPoint,
             ateEvilCreature,
-            reverseCreatures,unReverseCreatures;
+            reverseCreatures,
+            unReverseCreatures,
+            gameFinished;
 
     public GameState(Engine engine) {
         this.engine = engine;

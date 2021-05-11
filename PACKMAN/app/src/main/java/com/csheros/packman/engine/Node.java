@@ -90,4 +90,13 @@ public class Node {
         }
         return false;
     }
+
+    public boolean hasPoints() {
+        for (Creature creature : creatures) {
+            if (creature.getType() == Creature.Type.POINT ||
+                    creature.getType() == Creature.Type.MASTER_POINT)
+                return true;
+        }
+        return false;
+    }
 }

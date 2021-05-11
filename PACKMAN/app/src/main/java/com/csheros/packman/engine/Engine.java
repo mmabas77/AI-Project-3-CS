@@ -59,7 +59,16 @@ public class Engine {
         createNextFrame(allMovableCreatures);
         evaluateCollisions(allNodes, allMovableCreatures);
         evaluateMasterPointValidTime(allMovableCreatures);
+        evaluateGameFinished(nodeMap.getAllNodes());
         return this.nextState;
+    }
+
+    private void evaluateGameFinished(List<Node> allNodes) {
+        for (Node node : allNodes) {
+            if(node.hasPoints())
+                return;
+        }
+        nextState.setGameFinished(true);
     }
 
     private void evaluateMasterPointValidTime(List<Creature> allMovableCreatures) {
