@@ -15,6 +15,7 @@ public class BFS implements NextMoveCalculator {
 
     @Override
     public Direction getNextMoveDirection(NodePosition srcNodePosition, NodePosition targetNodePosition, NodeMap nodeMap) {
+
         // Node Holders
         LinkedList<DFSNode> DFS_Queue = new LinkedList<>();
         List<DFSNode> visitedNodes = new ArrayList<>();
