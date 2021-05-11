@@ -14,6 +14,7 @@ public class NodeMap {
     /**
      * Used to calculate evil creatures path
      */
+    private NodePosition packManPosition;
     private Direction packManDirection;
     private final List<Node[]> nodesMap;
     private MapSize mapSize;
@@ -33,6 +34,7 @@ public class NodeMap {
         this.mapSize = mapSize;
         this.nodesMap = new ArrayList<>();
         this.packManDirection = Direction.STAND_STILL;
+        this.packManPosition = packManPosition;
 
         constructMap(mapSize);
         fillWithNodes(nodesMap);
@@ -66,6 +68,8 @@ public class NodeMap {
             return;
         creature.getNode().removeCreature(creature);
         getNodeByPosition(nodePosition).addCreature(creature);
+        if (creature.getType() == Creature.Type.PACK_MAN)
+            this.packManPosition = nodePosition;
     }
 
     private void constructMap(MapSize mapSize) {
@@ -116,5 +120,14 @@ public class NodeMap {
     private Node getNodeByPosition(NodePosition packManPosition) {
         return this.nodesMap
                 .get(packManPosition.getRow())[packManPosition.getCol()];
+    }
+
+    public NodePosition getPackManPosition() {
+        if (this.packManPosition == null)
+            for (Node node : getAllNodes()) {
+                if (node.checkTypes().hasBackMan())
+                    this.packManPosition = node.getPosition();
+            }
+        return packManPosition;
     }
 }
