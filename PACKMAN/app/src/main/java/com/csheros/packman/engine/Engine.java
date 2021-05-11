@@ -4,6 +4,7 @@ import com.csheros.packman.pojo.GameState;
 import com.csheros.packman.pojo.NodeTypesCheck;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Data;
@@ -56,11 +57,30 @@ public class Engine {
         this.nextState = new GameState(this);
         List<Node> allNodes = nodeMap.getAllNodes();
         List<Creature> allMovableCreatures = getAllMovableCreatures(allNodes);
-        createNextFrame(allMovableCreatures);
-        evaluateCollisions(allNodes, allMovableCreatures);
+        createAndEvaluateFrame(allNodes, allMovableCreatures);
         evaluateMasterPointValidTime(allMovableCreatures);
         evaluateGameFinished(nodeMap.getAllNodes());
         return this.nextState;
+    }
+
+    private void createAndEvaluateFrame(List<Node> allNodes, List<Creature> allMovableCreatures) {
+        Creature packMan = getPackMan(allMovableCreatures);
+        if (packMan != null) {
+            allMovableCreatures.remove(packMan);
+            createNextFrame(Collections.singletonList(packMan));
+            evaluateCollisions(allNodes, allMovableCreatures);
+        }
+        createNextFrame(allMovableCreatures);
+        allMovableCreatures.add(packMan);
+        evaluateCollisions(allNodes, allMovableCreatures);
+    }
+
+    private Creature getPackMan(List<Creature> allMovableCreatures) {
+        for (Creature creature : allMovableCreatures) {
+            if (creature.getType() == Creature.Type.PACK_MAN)
+                return creature;
+        }
+        return null;
     }
 
     private void evaluateGameFinished(List<Node> allNodes) {
