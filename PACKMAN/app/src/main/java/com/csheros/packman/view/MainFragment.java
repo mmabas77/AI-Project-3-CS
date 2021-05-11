@@ -43,7 +43,7 @@ public class MainFragment extends Fragment {
     private LinearLayout gameWorld;
     private Button btnUp, btnDown, btnRight, btnLeft;
     private TextView txtLevel, txtScore;
-    Dialog dialog ;
+    Dialog dialog;
 
     @Nullable
     @Override
@@ -70,7 +70,7 @@ public class MainFragment extends Fragment {
         txtScore = view.findViewById(R.id.txtScore);
 
         // init dialog
-        dialog =new Dialog(getContext());
+        dialog = new Dialog(getContext());
 
         return view;
     }
@@ -84,10 +84,7 @@ public class MainFragment extends Fragment {
                 .create(MainViewModel.class);
 
         mViewModel.getGameStateLiveData().observe(getViewLifecycleOwner(),
-                gameState -> {
-                    nodeMapReceived(gameState.getEngine().getNodeMap());
-                    updateStatistics(gameState);
-                });
+                this::gameStateReceived);
         mViewModel.getNodeMapLiveData().observe(getViewLifecycleOwner(),
                 nodeMap -> mViewModel.startGame(
                         nodeMap,
@@ -99,16 +96,16 @@ public class MainFragment extends Fragment {
         );
 
         mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
-                level -> {
-                    mViewModel.createNodeMap(level);
-                    txtLevel.setText(String.valueOf(level));
-                });
+                level -> txtLevel.setText(String.valueOf(level)));
 
-        //show Dialog
-        mViewModel.getGameStateLiveData().observe(getViewLifecycleOwner(),gameState -> {
-            showDialog(gameState);
-        });
+        mViewModel.createNodeMap(1);
 
+    }
+
+    private void gameStateReceived(GameState gameState) {
+        nodeMapReceived(gameState.getEngine().getNodeMap());
+        updateStatistics(gameState);
+        showWinnerOrLoserDialog(gameState);
     }
 
     private void updateStatistics(GameState gameState) {
@@ -189,20 +186,26 @@ public class MainFragment extends Fragment {
         }
     }
 
-    public void showDialog(GameState gameState){
-     if(gameState.isPackManDied()){
-         dialog.setContentView(R.layout.loser_dialog);
-         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-         ImageView replay= dialog.findViewById(R.id.replay);
-         dialog.show();
-     }
-else {
-         dialog.setContentView(R.layout.winner_dialog);
-         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-         dialog.show();
-
-     }
-
+    public void showWinnerOrLoserDialog(GameState gameState) {
+        if (gameState.isPackManDied()) {
+            dialog.setContentView(R.layout.loser_dialog);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            ImageView replay = dialog.findViewById(R.id.replay);
+            replay.setOnClickListener(v -> {
+                mViewModel.createNodeMap(mViewModel.getCurrentLevelLiveData().getValue());
+                dialog.dismiss();
+            });
+            dialog.show();
+        } else if (gameState.isGameFinished()) {
+            dialog.setContentView(R.layout.winner_dialog);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            ImageView nextLevel = dialog.findViewById(R.id.nextLevel);
+            nextLevel.setOnClickListener(v -> {
+                mViewModel.createNodeMap(mViewModel.getCurrentLevelLiveData().getValue() + 1);
+                dialog.dismiss();
+            });
+            dialog.show();
+        }
     }
 
 }

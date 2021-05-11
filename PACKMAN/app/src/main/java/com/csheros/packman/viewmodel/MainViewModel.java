@@ -45,6 +45,7 @@ public class MainViewModel extends AndroidViewModel {
     // ----- ----- Node Map Generation ----- ----- //
     public void createNodeMap(int level) {
         mapRepo.createNodeMap(level);
+        currentLevelLiveData.postValue(level);
     }
 
     public LiveData<NodeMap> getNodeMapLiveData() {

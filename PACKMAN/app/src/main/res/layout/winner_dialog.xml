@@ -70,7 +70,7 @@
                 tools:ignore="VectorDrawableCompat" />
 
             <ImageView
-                android:id="@+id/replay"
+                android:id="@+id/nextLevel"
                 android:layout_width="59dp"
                 android:layout_height="51dp"
                 android:layout_marginTop="16dp"
