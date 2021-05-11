@@ -71,6 +71,7 @@ public class MainFragment extends Fragment {
 
         // init dialog
         dialog = new Dialog(getContext());
+        dialog.setCancelable(false);
 
         return view;
     }
