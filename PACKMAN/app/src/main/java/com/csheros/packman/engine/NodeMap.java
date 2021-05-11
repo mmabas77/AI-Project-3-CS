@@ -11,8 +11,6 @@ import lombok.Data;
 @Data
 public class NodeMap {
 
-    // Todo : Create evaluator & frame calculator for the map then make the model
-
     /**
      * Used to calculate evil creatures path
      */
