@@ -16,8 +16,12 @@ public class NodeMap {
      */
     private Direction packManDirection;
     private final List<Node[]> nodesMap;
-    private final MapSize mapSize;
+    private MapSize mapSize;
 
+
+    public NodeMap(List<Node[]> nodesMap) {
+        this.nodesMap = nodesMap;
+    }
 
     public NodeMap(
             MapSize mapSize,

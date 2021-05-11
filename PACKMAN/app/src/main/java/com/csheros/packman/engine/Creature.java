@@ -39,6 +39,8 @@ public class Creature {
         switch (this.getType()) {
             case PACK_MAN:
                 currentDirection = getNode().getNodeMap().getPackManDirection();
+                if (currentDirection == null)
+                    currentDirection = Direction.STAND_STILL;
                 break;
             case EVIL_CREATURE:
                 // Todo : Implement this!
