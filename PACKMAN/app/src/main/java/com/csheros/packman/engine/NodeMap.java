@@ -22,6 +22,7 @@ public class NodeMap {
 
     public NodeMap(List<Node[]> nodesMap) {
         this.nodesMap = nodesMap;
+        this.packManDirection = Direction.STAND_STILL;
     }
 
     public NodeMap(
@@ -60,7 +61,7 @@ public class NodeMap {
             return false;
         boolean hasBlock = getNodeByPosition(nodePosition).hasBlock();
 
-        return allowedInSize && !hasBlock;
+        return !hasBlock;
     }
 
     public void moveToPositionIfPossible(Creature creature, NodePosition nodePosition) {
