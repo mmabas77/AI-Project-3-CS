@@ -12,6 +12,7 @@ public class Creature {
      * Parent Node
      */
     private Node node;
+    private Node firstNode;
     private final Type type;
     private Direction currentDirection;
 
@@ -71,6 +72,12 @@ public class Creature {
             default:
                 return R.drawable.square;
         }
+    }
+
+    public void reset() {
+        this.firstNode.addCreature(this);
+        this.currentDirection = Direction.STAND_STILL;
+        this.isReversed = false;
     }
 
     public enum Type {

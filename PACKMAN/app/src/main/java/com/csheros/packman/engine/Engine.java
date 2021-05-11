@@ -65,7 +65,7 @@ public class Engine {
 
     private void evaluateGameFinished(List<Node> allNodes) {
         for (Node node : allNodes) {
-            if(node.hasPoints())
+            if (node.hasPoints())
                 return;
         }
         nextState.setGameFinished(true);
@@ -148,6 +148,9 @@ public class Engine {
             packManDies(node, check);
         } else {
             killCreatures(node, check.getEvilCreatures(), evilCreatureScore);
+            for (Creature evilCreature : check.getEvilCreatures()) {
+                evilCreature.reset();
+            }
             this.nextState.setAteEvilCreature(true);
         }
     }

@@ -28,6 +28,8 @@ public class Node {
 
     public void addCreature(Creature creature) {
         this.creatures.add(creature);
+        if(creature.getFirstNode()==null)
+            creature.setFirstNode(this);
         creature.setNode(this);
     }
 
