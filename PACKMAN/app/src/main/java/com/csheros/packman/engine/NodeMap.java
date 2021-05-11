@@ -51,7 +51,7 @@ public class NodeMap {
         return nodes;
     }
 
-    private boolean canMoveToPosition(Creature creature, NodePosition nodePosition) {
+    public boolean canMoveToPosition(Creature creature, NodePosition nodePosition) {
         boolean allowedInSize = mapSize
                 .insideMap(nodePosition.getCol(), nodePosition.getRow());
         if (!allowedInSize)
