@@ -11,21 +11,14 @@ public class Testing {
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-
-//        testing.n =n ;
-//        char grid[][] =new char[n][n];
-//        for(int i =0 ; i  <n ;i++){
-//            for(int j =0 ; j  <n ;j++) {
-//                grid[i][j] = sc.nextChar();
-//            }
-//        }
-//
-//        DSU dsu = new DSU(n);
-//
-//        ArrayList<Edge> edges = Gene;
-//
-
-
+        Randomization rand = new Randomization(n);
+        char res[][] = rand.GetMap();
+        for(int i =0 ;i  < res.length ;i++){
+            for(int j =0 ;j < res[0].length ;j++){
+                System.out.print(res[i][j]);
+            }
+            System.out.println();
+        }
 
     }
     static class Scanner {
