@@ -1,4 +1,4 @@
-package com.csheros.packman.MazeGenerator;
+package com.company ;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,6 +8,23 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Testing {
+
+    private static int  xx[]={1 , -1 ,0 ,0 };
+    private static int yy[]={0 , 0 ,1 ,-1 };
+
+    public static boolean Go(char arr [][] , int x ,int y ,int tar_x ,int tar_y){
+        if(x>=arr.length || x <0 ||y>=arr.length || y <0 )
+            return false;
+        if(arr[x][y]!='.') return false;
+        if (x==tar_x && y==tar_y)
+           return true;
+        boolean res =false;
+        for(int i =0 ;i  <4 ;i++){
+            res = res || Go(arr , x+xx[i] ,y+yy[i] , tar_x ,tar_y);
+        }
+        return res;
+
+    }
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
@@ -19,6 +36,9 @@ public class Testing {
             }
             System.out.println();
         }
+        for(int i =0 ;i < n ;i+=1)
+                for(int j =0 ;j < n ;j++)
+                    System.out.println(Go(res , i ,j, n-1 ,n-1 ));
 
     }
     static class Scanner {
