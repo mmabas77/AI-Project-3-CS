@@ -8,7 +8,10 @@ public class DSU {
     private int parent[];
     private int size [];
     private Random rand ;
-    public void DSU(int n ){
+    private int n ;
+
+    public DSU(int n ){
+        this.n =n ;
         for(int i =0 ;i < n ;i++)
             parent[i] = i ;
         for(int i =0 ;i  <n ;i++)
