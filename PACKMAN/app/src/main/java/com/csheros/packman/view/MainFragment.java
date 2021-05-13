@@ -192,6 +192,18 @@ public class MainFragment extends Fragment {
             dialog.setContentView(R.layout.loser_dialog);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             ImageView replay = dialog.findViewById(R.id.replay);
+
+            //show level in loser dialog
+            TextView txtlevel_dialog=dialog.findViewById(R.id.level_loserDialog);
+            mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
+                    level -> txtlevel_dialog.setText(String.valueOf(level)));
+
+            //show score in loser dialog
+            TextView txtscore_dialog=dialog.findViewById(R.id.score_loserDialog);
+            int score = gameState.getEngine().getScore();
+            txtscore_dialog.setText(String.valueOf(score));
+
+            // impl replay img
             replay.setOnClickListener(v -> {
                 mViewModel.createNodeMap(mViewModel.getCurrentLevelLiveData().getValue());
                 dialog.dismiss();
@@ -200,6 +212,18 @@ public class MainFragment extends Fragment {
         } else if (gameState.isGameFinished()) {
             dialog.setContentView(R.layout.winner_dialog);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            //show level in winner dialog
+            TextView txtlevel_dialog=dialog.findViewById(R.id.level_winnerDialog);
+            mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
+                    level -> txtlevel_dialog.setText(String.valueOf(level)));
+
+            //show score in winner dialog
+            TextView txtscore_dialog=dialog.findViewById(R.id.score_winnerDialog);
+            int score = gameState.getEngine().getScore();
+            txtscore_dialog.setText(String.valueOf(score));
+
+            //impl nextLevel img
             ImageView nextLevel = dialog.findViewById(R.id.nextLevel);
             nextLevel.setOnClickListener(v -> {
                 mViewModel.createNodeMap(mViewModel.getCurrentLevelLiveData().getValue() + 1);

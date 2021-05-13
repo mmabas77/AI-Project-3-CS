@@ -13,20 +13,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/black">
 
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginRight="2dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_close"
-                tools:ignore="VectorDrawableCompat" />
 
             <TextView
                 android:id="@+id/textView"
@@ -34,36 +23,37 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="144dp"
                 android:layout_marginLeft="144dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="149dp"
                 android:layout_marginRight="149dp"
                 android:text="@string/lose_game"
-                android:textColor="#424242"
+                android:textColor="#E81616"
                 android:textSize="23dp"
                 android:textStyle="bold|italic"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.573"
+                app:layout_constraintHorizontal_bias="0.477"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="255dp"
-                android:layout_height="175dp"
-                android:layout_marginTop="24dp"
+                android:layout_width="266dp"
+                android:layout_height="139dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="44dp"
                 android:layout_marginRight="44dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:srcCompat="@drawable/game_over_img" />
+                app:srcCompat="@drawable/game_over_new3" />
 
             <ImageView
                 android:id="@+id/menu_icon"
-                android:layout_width="61dp"
-                android:layout_height="43dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="244dp"
-                android:layout_marginRight="244dp"
+                android:layout_width="66dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="92dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:background="#455A64"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2"
                 app:srcCompat="@drawable/ic_menu"
@@ -73,13 +63,70 @@
                 android:id="@+id/replay"
                 android:layout_width="59dp"
                 android:layout_height="51dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="64dp"
-                android:layout_marginRight="64dp"
+                android:layout_marginTop="92dp"
+                android:layout_marginEnd="56dp"
+                android:layout_marginRight="56dp"
+                android:background="#455A64"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2"
                 app:srcCompat="@drawable/ic_replay"
                 tools:ignore="MissingConstraints,VectorDrawableCompat" />
+
+            <TextView
+                android:id="@+id/level_loserDialog"
+                android:layout_width="89dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="56dp"
+                android:text=" "
+                android:textColor="#D30C0C"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.563"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+            <TextView
+                android:id="@+id/score_loserDialog"
+                android:layout_width="85dp"
+                android:layout_height="27dp"
+                android:layout_marginTop="12dp"
+                android:text=" "
+                android:textColor="#EC0909"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.206"
+                app:layout_constraintStart_toEndOf="@+id/textView6"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="200dp"
+                android:text="@string/score"
+                android:textColor="#E11111"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.181"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="244dp"
+                android:text="@string/level"
+                android:textColor="#CA0D0D"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.178"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
