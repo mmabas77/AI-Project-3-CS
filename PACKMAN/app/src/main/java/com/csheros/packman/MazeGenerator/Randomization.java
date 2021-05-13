@@ -1,4 +1,6 @@
 package com.company ;
+import com.csheros.packman.MazeGenerator.DSU;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
