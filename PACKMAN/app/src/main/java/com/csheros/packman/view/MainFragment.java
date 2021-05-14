@@ -261,7 +261,7 @@ public class MainFragment extends Fragment {
                 dialog.dismiss();
             });
             dialog.show();
-        } else if (gameState.isGameFinished() |true) {
+        } else if (gameState.isGameFinished()) {
             dialog.setContentView(R.layout.winner_dialog);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
