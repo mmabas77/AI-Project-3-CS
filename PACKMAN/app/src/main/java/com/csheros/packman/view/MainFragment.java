@@ -124,7 +124,7 @@ public class MainFragment extends Fragment {
     private void playSounds(GameState gameState) {
 
         if (gameState.isAtePoint())
-            playSound(R.raw.eat,VolumeType.LOWER);
+            playSound(R.raw.eat,VolumeType.LOW);
 
         if (gameState.isPackManDied())
             playSound(R.raw.death,VolumeType.HIGH);
@@ -134,14 +134,16 @@ public class MainFragment extends Fragment {
     }
 
     enum VolumeType {
-        LOWER, HIGH
+        HIGH , LOW, LOWER
     }
 
     private void playSound(int id, VolumeType volumeType) {
         MediaPlayer player = MediaPlayer.create(getContext(), id);
         float volume = 0.7f;
-        if (volumeType == VolumeType.LOWER)
+        if (volumeType == VolumeType.LOW)
             volume = 0.2f;
+        else if (volumeType == VolumeType.LOWER)
+            volume = 0.05f;
         player.setVolume(volume, volume);
         player.setOnCompletionListener(MediaPlayer::release);
         player.start();
