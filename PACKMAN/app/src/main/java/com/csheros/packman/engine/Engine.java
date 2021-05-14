@@ -114,7 +114,8 @@ public class Engine {
     private void unReverseCreatures(List<Creature> allMovableCreatures) {
         reversed = false;
         for (Creature creature : allMovableCreatures) {
-            creature.setReversed(false);
+            if (creature != null)
+                creature.setReversed(false);
         }
         this.nextState.setUnReverseCreatures(true);
     }
