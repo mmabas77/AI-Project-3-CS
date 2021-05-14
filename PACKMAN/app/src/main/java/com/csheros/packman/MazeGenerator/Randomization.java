@@ -1,4 +1,5 @@
-package com.company ;
+package com.csheros.packman.MazeGenerator ;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -35,10 +36,12 @@ public class Randomization {
         }
     }
     private class Edge {
-        public int u , v ;
-        public Edge(int u ,int v ){
+        private int u , v ;
+        private int mid ;
+        public Edge(int u ,int v ,int mid){
             this.u = u ;
-            this.v =v ;
+            this.v = v ;
+            this.mid = mid;
         }
 
     }
@@ -58,7 +61,7 @@ public class Randomization {
         char result[][] = new char[n][n];
         for (int i =0 ;i  <n ;i++)
             for(int j= 0 ;j < n ;j++)
-                    result[i][j] = '.';
+                result[i][j] = '.';
         DSU dsu = new DSU(n*n);
 
         ArrayList<Edge>edges = GenerteEdges(n);
@@ -68,16 +71,18 @@ public class Randomization {
             Collections.shuffle(edges);
             Edge currentEdge = edges.get(edges.size()-1);
             edges.remove(edges.size()-1);
-            if (CheckNeighbors(dsu , currentEdge)){
+            if (!dsu.isSame(currentEdge.u , currentEdge.v ) && result[GetNodeFromID(currentEdge.mid).x][GetNodeFromID(currentEdge.mid).y]=='.'){
+
                 result[GetNodeFromID(currentEdge.u).x][GetNodeFromID(currentEdge.u).y]='*';
+                result[GetNodeFromID(currentEdge.mid).x][GetNodeFromID(currentEdge.mid).y]='*';
                 result[GetNodeFromID(currentEdge.v).x][GetNodeFromID(currentEdge.v).y]='*';
                 dsu.merge(currentEdge.u , currentEdge.v);
-                for(int i =0 ;i  <n ;i+=1){
-                    for(int j =0 ;j<n ;j+=1){
-                        System.out.print(result[i][j]);
-                    }
-                    System.out.println();
-                }
+//                for(int i =0 ;i  <n ;i+=1){
+//                    for(int j =0 ;j<n ;j+=1){
+//                        System.out.print(result[i][j]);
+//                    }
+//                    System.out.println();
+//                }
 
             }
         }
@@ -108,8 +113,6 @@ public class Randomization {
     }
 
 
-
-
     public ArrayList<Edge> GenerteEdges(int n)
     {
         boolean used [][]= new boolean [n*n][n*n];
@@ -122,10 +125,12 @@ public class Randomization {
                 for (int k =0 ;k < 4 ;k++){
                     int x = i + xx[k];
                     int y = j + yy[k];
-                    if(x >=0 && x <n && y >=0 && y < n && !used[GetIDFromNode(new Node(i ,j ))][GetIDFromNode(new Node(x , y ))]){
+                    if(x >=0 && x < n && y >=0 && y < n && !used[GetIDFromNode(new Node(i ,j ))][GetIDFromNode(new Node(x , y ))]){
                         used[GetIDFromNode(new Node(i ,j ))][GetIDFromNode(new Node(x , y ))]=true ;
                         used[GetIDFromNode(new Node(x , y ))][GetIDFromNode(new Node(i ,j ))]=true ;
-                        result.add(new Edge(GetIDFromNode(new Node(i, j )) ,GetIDFromNode(new Node(x , y ))));
+                        int mid_x = i+xx_2[k] ,mid_y = j+yy_2[k];
+
+                        result.add(new Edge(GetIDFromNode(new Node(i, j )) ,GetIDFromNode(new Node(x , y ))  , GetIDFromNode(new Node(mid_x ,mid_y))));
                     }
                 }
             }

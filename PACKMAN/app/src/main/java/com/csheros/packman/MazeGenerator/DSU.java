@@ -5,31 +5,37 @@ import com.csheros.packman.ai.AlgoNode;
 import java.util.Random;
 
 public class DSU {
+    private int n ;
     private int parent[];
     private int size [];
     private Random rand ;
-    private int n ;
 
     public DSU(int n ){
         this.n =n ;
+        parent = new int[n];
+        size = new int[n];
+        rand =new Random();
         for(int i =0 ;i < n ;i++)
             parent[i] = i ;
         for(int i =0 ;i  <n ;i++)
-            size[i]=1;
-        rand =new Random();
+            size[i] = 1;
+
     }
 
     public int parentOf(int node){
-        return parent[node]!= node ? parent[node] = parentOf(parent[node]) : node;
+        return parent[node] = (parent[node]!= node) ?  parentOf(parent[node]) : node;
     }
     public boolean isSame(int u , int v ){
-        return parentOf(u) ==parentOf(v);
+        return parentOf(u) == parentOf(v);
     }
     public void merge(int u ,int v ){
+        u =parentOf(u) ;
+        v =parentOf(v) ;
         if (isSame(u,v))
             return;
         //I don't best complexity of merging but randomization make it well
-        int toss = rand.nextInt(1);
+        int toss = rand.nextInt(2);
+        System.out.println(toss);
         if(toss==1){
             parent[u] =parent[v];
             size[v]+=size[u];
@@ -39,5 +45,16 @@ public class DSU {
             size[u]+=size[v];
         }
 
+    }
+    public void rooted(){
+        for(int i =0 ;i  <n ;i++)
+            parentOf(i);
+    }
+    public int[] getParent() {
+        return parent;
+    }
+
+    public int[] getSize() {
+        return size;
     }
 }
