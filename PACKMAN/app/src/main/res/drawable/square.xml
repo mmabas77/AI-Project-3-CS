@@ -4,8 +4,6 @@
     android:tint="@color/black">
 
     <stroke
-        android:width="24dp"
-
         android:color="@color/black" />
 
 </shape>
