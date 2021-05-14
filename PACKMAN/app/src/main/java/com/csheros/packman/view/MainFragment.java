@@ -123,6 +123,9 @@ public class MainFragment extends Fragment {
 
     private void playSounds(GameState gameState) {
 
+        if(gameState.isAteMasterPoint())
+            playSound(R.raw.hala2_alieh,VolumeType.HIGH);
+
         if (gameState.isAtePoint())
             playSound(R.raw.eat,VolumeType.LOW);
 
