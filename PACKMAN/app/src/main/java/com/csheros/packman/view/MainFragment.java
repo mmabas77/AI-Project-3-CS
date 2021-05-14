@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -45,6 +46,9 @@ public class MainFragment extends Fragment {
     private TextView txtLevel, txtScore;
     Dialog dialog;
 
+    // Sounds
+    private boolean evilMoveSoundsOn;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -73,6 +77,9 @@ public class MainFragment extends Fragment {
         dialog = new Dialog(getContext());
         dialog.setCancelable(false);
 
+        // Sounds
+        evilMoveSoundsOn = true;
+
         return view;
     }
 
@@ -97,7 +104,10 @@ public class MainFragment extends Fragment {
         );
 
         mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
-                level -> txtLevel.setText(String.valueOf(level)));
+                level -> {
+                    txtLevel.setText(String.valueOf(level));
+                    evilMoveSoundsOn = true;
+                });
 
         mViewModel.createNodeMap(1);
 
@@ -107,6 +117,23 @@ public class MainFragment extends Fragment {
         nodeMapReceived(gameState.getEngine().getNodeMap());
         updateStatistics(gameState);
         showWinnerOrLoserDialog(gameState);
+        stopSoundsIfFinished(gameState);
+        playSounds(gameState);
+    }
+
+    private void playSounds(GameState gameState) {
+
+        if (!evilMoveSoundsOn)
+            return;
+        MediaPlayer player = MediaPlayer.create(getContext(), R.raw.ghost);
+        player.setOnCompletionListener(MediaPlayer::release);
+        player.start();
+
+    }
+
+    private void stopSoundsIfFinished(GameState gameState) {
+        if (gameState.isGameFinished() || gameState.isPackManDied())
+            evilMoveSoundsOn = false;
     }
 
     private void updateStatistics(GameState gameState) {
@@ -194,12 +221,12 @@ public class MainFragment extends Fragment {
             ImageView replay = dialog.findViewById(R.id.replay);
 
             //show level in loser dialog
-            TextView txtlevel_dialog=dialog.findViewById(R.id.level_loserDialog);
+            TextView txtlevel_dialog = dialog.findViewById(R.id.level_loserDialog);
             mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
                     level -> txtlevel_dialog.setText(String.valueOf(level)));
 
             //show score in loser dialog
-            TextView txtscore_dialog=dialog.findViewById(R.id.score_loserDialog);
+            TextView txtscore_dialog = dialog.findViewById(R.id.score_loserDialog);
             int score = gameState.getEngine().getScore();
             txtscore_dialog.setText(String.valueOf(score));
 
@@ -214,12 +241,12 @@ public class MainFragment extends Fragment {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
             //show level in winner dialog
-            TextView txtlevel_dialog=dialog.findViewById(R.id.level_winnerDialog);
+            TextView txtlevel_dialog = dialog.findViewById(R.id.level_winnerDialog);
             mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
                     level -> txtlevel_dialog.setText(String.valueOf(level)));
 
             //show score in winner dialog
-            TextView txtscore_dialog=dialog.findViewById(R.id.score_winnerDialog);
+            TextView txtscore_dialog = dialog.findViewById(R.id.score_winnerDialog);
             int score = gameState.getEngine().getScore();
             txtscore_dialog.setText(String.valueOf(score));
 
