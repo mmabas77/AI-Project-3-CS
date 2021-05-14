@@ -122,7 +122,11 @@ public class MainFragment extends Fragment {
     }
 
     private void playSounds(GameState gameState) {
-
+        if(gameState.isPackManDied()){
+            MediaPlayer player = MediaPlayer.create(getContext(), R.raw.death);
+            player.setOnCompletionListener(MediaPlayer::release);
+            player.start();
+        }
         if (!evilMoveSoundsOn)
             return;
         MediaPlayer player = MediaPlayer.create(getContext(), R.raw.ghost);
