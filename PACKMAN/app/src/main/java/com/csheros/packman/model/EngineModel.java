@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.csheros.packman.MainActivity;
 import com.csheros.packman.engine.Engine;
 import com.csheros.packman.engine.NodeMap;
 import com.csheros.packman.pojo.GameState;
@@ -71,6 +72,8 @@ public class EngineModel {
             int frameRate = engine.getFrameRate();
             long sleepTime = 1000 / frameRate;
             while (!isInterrupted()) {
+                if (!MainActivity.isInForeGround())
+                    continue;
                 GameState gameState = engine.nextStateTransaction();
                 gameStateMutableLiveData.postValue(gameState);
                 try {

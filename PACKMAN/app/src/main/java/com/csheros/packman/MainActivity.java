@@ -9,6 +9,8 @@ import com.csheros.packman.view.StarterFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static boolean InForeGround;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,5 +26,21 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.container, StarterFragment.newInstance())
                     .commitNow();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MainActivity.InForeGround = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MainActivity.InForeGround = true;
+    }
+
+    public static boolean isInForeGround() {
+        return InForeGround;
     }
 }
