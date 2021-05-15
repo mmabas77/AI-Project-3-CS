@@ -131,4 +131,20 @@ public class NodeMap {
             }
         return packManPosition;
     }
+
+    private int evilCreaturesCount = -1;
+
+    public synchronized int getEvilCreaturesCount() {
+        if (evilCreaturesCount == -1) {
+            int count = 0;
+            for (Node node : getAllNodes()) {
+                for (Creature creature : node.getCreatures()) {
+                    if (creature.getType() == Creature.Type.EVIL_CREATURE)
+                        count++;
+                }
+            }
+            evilCreaturesCount = count;
+        }
+        return evilCreaturesCount;
+    }
 }

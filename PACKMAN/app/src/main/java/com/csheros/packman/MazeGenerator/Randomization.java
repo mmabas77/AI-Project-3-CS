@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 package com.csheros.packman.MazeGenerator ;
+=======
+package com.company ;
+import com.csheros.packman.MazeGenerator.DSU;
+>>>>>>> 11e798e8e05ccbcb895203475f26bb565cd09b3b
 
 import java.io.BufferedReader;
 import java.io.File;

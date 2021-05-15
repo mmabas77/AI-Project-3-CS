@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -44,6 +46,9 @@ public class MainFragment extends Fragment {
     private Button btnUp, btnDown, btnRight, btnLeft;
     private TextView txtLevel, txtScore;
     Dialog dialog;
+
+    // Sounds
+    private boolean evilMoveSoundsOn;
 
     @Nullable
     @Override
@@ -73,6 +78,12 @@ public class MainFragment extends Fragment {
         dialog = new Dialog(getContext());
         dialog.setCancelable(false);
 
+        // Sounds
+        evilMoveSoundsOn = true;
+
+        //disable dark mood
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         return view;
     }
 
@@ -97,7 +108,10 @@ public class MainFragment extends Fragment {
         );
 
         mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
-                level -> txtLevel.setText(String.valueOf(level)));
+                level -> {
+                    txtLevel.setText(String.valueOf(level));
+                    evilMoveSoundsOn = true;
+                });
 
         mViewModel.createNodeMap(1);
 
@@ -107,6 +121,44 @@ public class MainFragment extends Fragment {
         nodeMapReceived(gameState.getEngine().getNodeMap());
         updateStatistics(gameState);
         showWinnerOrLoserDialog(gameState);
+        stopSoundsIfFinished(gameState);
+        playSounds(gameState);
+    }
+
+    private void playSounds(GameState gameState) {
+
+        if(gameState.isAteMasterPoint())
+            playSound(R.raw.hala2_alieh,VolumeType.HIGH);
+
+        if (gameState.isAtePoint())
+            playSound(R.raw.eat,VolumeType.LOW);
+
+        if (gameState.isPackManDied())
+            playSound(R.raw.death,VolumeType.HIGH);
+
+        if (evilMoveSoundsOn)
+            playSound(R.raw.ghost,VolumeType.LOWER);
+    }
+
+    enum VolumeType {
+        HIGH , LOW, LOWER
+    }
+
+    private void playSound(int id, VolumeType volumeType) {
+        MediaPlayer player = MediaPlayer.create(getContext(), id);
+        float volume = 0.7f;
+        if (volumeType == VolumeType.LOW)
+            volume = 0.2f;
+        else if (volumeType == VolumeType.LOWER)
+            volume = 0.05f;
+        player.setVolume(volume, volume);
+        player.setOnCompletionListener(MediaPlayer::release);
+        player.start();
+    }
+
+    private void stopSoundsIfFinished(GameState gameState) {
+        if (gameState.isGameFinished() || gameState.isPackManDied())
+            evilMoveSoundsOn = false;
     }
 
     private void updateStatistics(GameState gameState) {
@@ -192,6 +244,18 @@ public class MainFragment extends Fragment {
             dialog.setContentView(R.layout.loser_dialog);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             ImageView replay = dialog.findViewById(R.id.replay);
+
+            //show level in loser dialog
+            TextView txtlevel_dialog = dialog.findViewById(R.id.level_loserDialog);
+            mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
+                    level -> txtlevel_dialog.setText(String.valueOf(level)));
+
+            //show score in loser dialog
+            TextView txtscore_dialog = dialog.findViewById(R.id.score_loserDialog);
+            int score = gameState.getEngine().getScore();
+            txtscore_dialog.setText(String.valueOf(score));
+
+            // impl replay img
             replay.setOnClickListener(v -> {
                 mViewModel.createNodeMap(mViewModel.getCurrentLevelLiveData().getValue());
                 dialog.dismiss();
@@ -200,6 +264,18 @@ public class MainFragment extends Fragment {
         } else if (gameState.isGameFinished()) {
             dialog.setContentView(R.layout.winner_dialog);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            //show level in winner dialog
+            TextView txtlevel_dialog = dialog.findViewById(R.id.level_winnerDialog);
+            mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
+                    level -> txtlevel_dialog.setText(String.valueOf(level)));
+
+            //show score in winner dialog
+            TextView txtscore_dialog = dialog.findViewById(R.id.score_winnerDialog);
+            int score = gameState.getEngine().getScore();
+            txtscore_dialog.setText(String.valueOf(score));
+
+            //impl nextLevel img
             ImageView nextLevel = dialog.findViewById(R.id.nextLevel);
             nextLevel.setOnClickListener(v -> {
                 mViewModel.createNodeMap(mViewModel.getCurrentLevelLiveData().getValue() + 1);
