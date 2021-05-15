@@ -1,10 +1,7 @@
 package com.csheros.packman.view;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -28,6 +25,7 @@ import com.csheros.packman.engine.Creature;
 import com.csheros.packman.engine.Node;
 import com.csheros.packman.engine.NodeMap;
 import com.csheros.packman.pojo.GameState;
+import com.csheros.packman.utils.Dialogs;
 import com.csheros.packman.utils.Direction;
 import com.csheros.packman.viewmodel.MainViewModel;
 
@@ -241,61 +239,22 @@ public class MainFragment extends Fragment {
     }
 
     public void showWinnerOrLoserDialog(GameState gameState) {
+        int level = mViewModel.getCurrentLevelLiveData().getValue();
+        int score = mViewModel.getGameStateLiveData().getValue().getEngine().getScore();
         if (gameState.isPackManDied()) {
-            dialog.setContentView(R.layout.loser_dialog);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            ImageView replay = dialog.findViewById(R.id.replay);
-            ImageView share = dialog.findViewById(R.id.share);
-
-            //show level in loser dialog
-            TextView txtlevel_dialog = dialog.findViewById(R.id.level_loserDialog);
-            mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
-                    level -> txtlevel_dialog.setText(String.valueOf(level)));
-
-            //show score in loser dialog
-            TextView txtscore_dialog = dialog.findViewById(R.id.score_loserDialog);
-            int score = gameState.getEngine().getScore();
-            txtscore_dialog.setText(String.valueOf(score));
-
-            // impl replay img
-            replay.setOnClickListener(v -> {
-                mViewModel.createNodeMap(mViewModel.getCurrentLevelLiveData().getValue());
-                dialog.dismiss();
-            });
-            share.setOnClickListener(v -> {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Checkout this awesome game : " +
-                        "\n" +
-                        "https://play.google.com/store/apps/details?id=" +
-                        getContext().getApplicationContext().getPackageName());
-                sendIntent.setType("text/plain");
-
-                Intent shareIntent = Intent.createChooser(sendIntent, "Send MSG");
-                startActivity(shareIntent);
-            });
-            dialog.show();
+            Dialogs.getLooserDialog(
+                    level,
+                    score,
+                    v -> mViewModel.createNodeMap(level),
+                    getContext()
+            ).show();
         } else if (gameState.isGameFinished()) {
-            dialog.setContentView(R.layout.winner_dialog);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-            //show level in winner dialog
-            TextView txtlevel_dialog = dialog.findViewById(R.id.level_winnerDialog);
-            mViewModel.getCurrentLevelLiveData().observe(getViewLifecycleOwner(),
-                    level -> txtlevel_dialog.setText(String.valueOf(level)));
-
-            //show score in winner dialog
-            TextView txtscore_dialog = dialog.findViewById(R.id.score_winnerDialog);
-            int score = gameState.getEngine().getScore();
-            txtscore_dialog.setText(String.valueOf(score));
-
-            //impl nextLevel img
-            ImageView nextLevel = dialog.findViewById(R.id.nextLevel);
-            nextLevel.setOnClickListener(v -> {
-                mViewModel.createNodeMap(mViewModel.getCurrentLevelLiveData().getValue() + 1);
-                dialog.dismiss();
-            });
-            dialog.show();
+            Dialogs.getWinnerDialog(
+                    level,
+                    score,
+                    v -> mViewModel.createNodeMap(level + 1),
+                    getContext()
+            ).show();
         }
     }
 
