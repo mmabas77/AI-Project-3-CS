@@ -1,5 +1,4 @@
 package com.csheros.packman.MazeGenerator ;
-import java.awt.image.AreaAveragingScaleFilter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

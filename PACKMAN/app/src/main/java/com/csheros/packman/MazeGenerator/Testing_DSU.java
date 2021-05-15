@@ -1,8 +1,6 @@
 package com.csheros.packman.MazeGenerator;
 
 
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-
 import java.io.*;
 import java.util.StringTokenizer;
 
