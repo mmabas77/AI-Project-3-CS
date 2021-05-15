@@ -40,16 +40,33 @@
         <ImageView
             android:id="@+id/replay"
             android:layout_width="64dp"
-            android:layout_height="51dp"
+            android:layout_height="64dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:background="@color/white"
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/imageView2"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
             app:srcCompat="@drawable/ic_replay"
             app:tint="@color/colorSecondary"
-            tools:ignore="MissingConstraints,VectorDrawableCompat" />
+            tools:ignore="MissingConstraints,VectorDrawableCompat"
+            android:focusable="true" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:rotation="180"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:srcCompat="@drawable/ic_share"
+            app:tint="@android:color/holo_green_dark"
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/level_loserDialog"
