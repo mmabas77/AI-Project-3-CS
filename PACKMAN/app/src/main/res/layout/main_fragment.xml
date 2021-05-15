@@ -30,7 +30,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,62 +38,74 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical"></View>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnLeft"
+                android:layout_width="@dimen/game_direction_btn"
+                android:layout_height="48dp"
+                android:background="@drawable/icon_direction"
+                android:clickable="true"
+                android:rotation="-45"
+                app:backgroundTintMode="add"
+                app:layout_constraintBottom_toTopOf="@+id/btnDown"
+                app:layout_constraintEnd_toStartOf="@+id/btnUp"
+                app:layout_constraintTop_toBottomOf="@+id/btnUp"
+                android:focusable="true" />
 
             <Button
                 android:id="@+id/btnUp"
                 android:layout_width="@dimen/game_direction_btn"
                 android:layout_height="@dimen/game_direction_btn"
-                android:background="@drawable/icon_up"
-                android:gravity="center" />
+                android:layout_marginTop="16dp"
+                android:background="@drawable/icon_direction"
+                android:clickable="true"
+                android:rotation="45"
+                app:backgroundTintMode="add"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:focusable="true" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnLeft"
-                    android:layout_width="@dimen/game_direction_btn"
-                    android:layout_height="@dimen/game_direction_btn"
-                    android:layout_weight="1"
-                    android:background="@drawable/icon_left" />
-
-                <LinearLayout
-                    android:layout_width="@dimen/game_direction_btn"
-                    android:layout_height="@dimen/game_direction_btn"
-                    android:layout_weight="1"
-                    android:background="@drawable/ic_dot"
-                    android:orientation="vertical"></LinearLayout>
-
-                <Button
-                    android:id="@+id/btnRight"
-                    android:layout_width="@dimen/game_direction_btn"
-                    android:layout_height="@dimen/game_direction_btn"
-                    android:layout_weight="1"
-                    android:background="@drawable/icon_right" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/btnRight"
+                android:layout_width="@dimen/game_direction_btn"
+                android:layout_height="@dimen/game_direction_btn"
+                android:background="@drawable/icon_direction"
+                android:clickable="true"
+                android:rotation="135"
+                app:backgroundTintMode="add"
+                app:layout_constraintBottom_toTopOf="@+id/btnDown"
+                app:layout_constraintStart_toEndOf="@+id/btnUp"
+                app:layout_constraintTop_toBottomOf="@+id/btnUp"
+                android:focusable="true" />
 
             <Button
                 android:id="@+id/btnDown"
                 android:layout_width="@dimen/game_direction_btn"
                 android:layout_height="@dimen/game_direction_btn"
-                android:background="@drawable/icon_down"
-                android:gravity="center" />
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/icon_direction"
+                android:clickable="true"
+                android:gravity="center"
+                android:rotation="223"
+                app:backgroundTintMode="add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnRight"
+                app:layout_constraintStart_toEndOf="@+id/btnLeft"
+                android:focusable="true" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
