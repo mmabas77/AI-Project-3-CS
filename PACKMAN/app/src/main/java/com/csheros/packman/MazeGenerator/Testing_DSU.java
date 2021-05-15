@@ -1,17 +1,15 @@
 package com.csheros.packman.MazeGenerator;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
+import java.io.*;
 import java.util.StringTokenizer;
 
 public class Testing_DSU {
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
 
         File file = new File("/media/abdelrahmankhaled/New Volume/Projects/Ac/backman/back/out/production/back/com/company/in.txt");
         if (file.exists()) {
@@ -26,10 +24,9 @@ public class Testing_DSU {
             for (int i = 0; i < m; i++) {
                 int u = sc.nextInt(), v = sc.nextInt();
                 System.out.println(u +" "+v);
-
-                dsu.merge(u - 1, v - 1);
+                System.out.println(dsu.isSame(u-1, v-1 ));
+                dsu.merge(u-1 , v-1 );
             }
-            dsu.rooted();
             int arr[] = dsu.getParent();
             int sz[] = dsu.getSize();
             for (int i = 0; i < n; i += 1) {
@@ -116,4 +113,6 @@ public class Testing_DSU {
 
     }
 
+
 }
+

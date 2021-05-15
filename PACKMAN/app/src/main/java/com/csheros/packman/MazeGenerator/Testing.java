@@ -1,5 +1,5 @@
-package com.company ;
-
+package com.csheros.packman.MazeGenerator ;
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +25,9 @@ public class Testing {
         return res;
 
     }
+
+
+
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
@@ -36,9 +39,16 @@ public class Testing {
             }
             System.out.println();
         }
+        ArrayList<Pair>arr= new ArrayList<Pair>();
         for(int i =0 ;i < n ;i+=1)
                 for(int j =0 ;j < n ;j++)
-                    System.out.println(Go(res , i ,j, n-1 ,n-1 ));
+                    if(res[i][j]=='.')
+                        arr.add(new Pair(i , j ));
+        for(Pair cur : arr){
+            for(Pair tar : arr)
+                System.out.println(Go(res ,cur.ff,cur.ss , tar.ff ,tar.ss ));
+        }
+
 
     }
     static class Scanner {

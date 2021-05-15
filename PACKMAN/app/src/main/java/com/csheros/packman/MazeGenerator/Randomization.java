@@ -1,9 +1,7 @@
-<<<<<<< HEAD
+
 package com.csheros.packman.MazeGenerator ;
-=======
-package com.company ;
 import com.csheros.packman.MazeGenerator.DSU;
->>>>>>> 11e798e8e05ccbcb895203475f26bb565cd09b3b
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,128 +17,157 @@ import java.util.List;
 import java.util.Random;
 import java.util.StringTokenizer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Randomization {
+    private int n;
+    private int[] xx = new int[]{0, 0, -2, 2, 0};
+    private int[] yy = new int[]{2, -2, 0, 0, 0};
+    private int[] xx_2 = new int[]{0, 0, -1, 1, 0};
+    private int[] yy_2 = new int[]{1, -1, 0, 0, 0};
 
-    private int n ;
-
-
-    private int xx[]={0 ,0 , -2 ,2 , 0 };
-    private int yy[]={2 ,-2 , 0 ,0 ,  0};
-    private int xx_2[]={0 ,0 , -1 ,1 , 0 };
-    private int yy_2[]={1 ,-1 , 0 ,0 ,  0};
-
-
-    private class Node {
-        public int x , y ;
-        public Node(int x ,int y ){
-            this.x = x ;
-            this.y = y ;
-        }
-        public boolean equals(Node other){
-            return other.x ==x && other.y ==y ;
-        }
+    public Randomization(int n) {
+        this.n = n;
     }
-    private class Edge {
-        private int u , v ;
-        private int mid ;
-        public Edge(int u ,int v ,int mid){
-            this.u = u ;
-            this.v = v ;
-            this.mid = mid;
+
+    private Randomization.Node GetNodeFromID(int x) {
+        return new Randomization.Node(x / this.n, x % this.n);
+    }
+
+    private int GetIDFromNode(Randomization.Node s) {
+        return this.n * s.x + s.y;
+    }
+
+    public char[][] GetMap() {
+        char[][] result = new char[this.n][this.n];
+
+        for(int i = 0; i < this.n; ++i) {
+            for(int j = 0; j < this.n; ++j) {
+                result[i][j] = '*';
+            }
         }
 
-    }
+        DSU dsu = new DSU(this.n * this.n);
+        ArrayList edges = this.GenerteEdges(this.n);
 
-    public Randomization(int n ){
-        this.n =n ;
-    }
-
-    private Node GetNodeFromID (int x ){
-        return new Node(x/n , x%n);
-    }
-    private  int GetIDFromNode(Node s){
-        return n * s.x + s.y;
-    }
-
-    public char[][]GetMap(){
-        char result[][] = new char[n][n];
-        for (int i =0 ;i  <n ;i++)
-            for(int j= 0 ;j < n ;j++)
-                result[i][j] = '.';
-        DSU dsu = new DSU(n*n);
-
-        ArrayList<Edge>edges = GenerteEdges(n);
-        for (Edge e : edges)
-            System.out.println(e.u + " "+ e.v );
-        while(edges.size()>0){
+        while(edges.size() > 0) {
             Collections.shuffle(edges);
-            Edge currentEdge = edges.get(edges.size()-1);
-            edges.remove(edges.size()-1);
-            if (!dsu.isSame(currentEdge.u , currentEdge.v ) && result[GetNodeFromID(currentEdge.mid).x][GetNodeFromID(currentEdge.mid).y]=='.'){
-
-                result[GetNodeFromID(currentEdge.u).x][GetNodeFromID(currentEdge.u).y]='*';
-                result[GetNodeFromID(currentEdge.mid).x][GetNodeFromID(currentEdge.mid).y]='*';
-                result[GetNodeFromID(currentEdge.v).x][GetNodeFromID(currentEdge.v).y]='*';
-                dsu.merge(currentEdge.u , currentEdge.v);
-//                for(int i =0 ;i  <n ;i+=1){
-//                    for(int j =0 ;j<n ;j+=1){
-//                        System.out.print(result[i][j]);
-//                    }
-//                    System.out.println();
-//                }
-
+            Randomization.Edge currentEdge = (Randomization.Edge)edges.get(edges.size() - 1);
+            edges.remove(edges.size() - 1);
+            if (!dsu.isSame(currentEdge.u, currentEdge.v) && this.CheckNeighbors(dsu, currentEdge)) {
+                result[this.GetNodeFromID(currentEdge.u).x][this.GetNodeFromID(currentEdge.u).y] = '.';
+                result[this.GetNodeFromID(currentEdge.mid).x][this.GetNodeFromID(currentEdge.mid).y] = '.';
+                result[this.GetNodeFromID(currentEdge.v).x][this.GetNodeFromID(currentEdge.v).y] = '.';
+                dsu.merge(currentEdge.u, currentEdge.v);
+                dsu.merge(currentEdge.u, currentEdge.mid);
+                dsu.merge(currentEdge.v, currentEdge.mid);
+                this.ConnectToNeighbors(result, dsu, currentEdge);
             }
         }
 
         return result;
     }
 
+    void print(char[][] result) {
+        for(int i = 0; i < this.n; ++i) {
+            for(int j = 0; j < this.n; ++j) {
+                System.out.print(result[i][j]);
+            }
 
-    boolean check(Node node ){
-        return(node.x >=0 && node.y>=0 && node.x < n && node.y < n  );
+            System.out.println();
+        }
+
     }
 
-    private boolean CheckNeighbors(DSU dsu, Edge currentEdge) {
-        Node u = GetNodeFromID(currentEdge.u);
-        Node v = GetNodeFromID(currentEdge.v);
-        boolean res =true;
-        for(int i =0 ;i  <5 ;i++){
-            for(int j = 0 ; j <5 ;j++){
-                Node new_u = new Node(u.x+xx_2[i] , u.y+yy_2[i] );
-                Node new_v = new Node(v.x+xx_2[j] , v.y+yy_2[j] );
-                if(new_u.equals(new_v) || !check(new_u) || !check(new_v))
-                    continue;
-                res = res && !dsu.isSame(GetIDFromNode(new_u) , GetIDFromNode(new_v));
+    boolean check(Randomization.Node node) {
+        return node.x >= 0 && node.y >= 0 && node.x < this.n && node.y < this.n;
+    }
 
+    boolean check(int x, int y) {
+        return x >= 0 && x < this.n && y >= 0 && y < this.n;
+    }
+
+    private boolean CheckNeighbors(DSU dsu, Randomization.Edge currentEdge) {
+        Randomization.Node u = this.GetNodeFromID(currentEdge.u);
+        Randomization.Node v = this.GetNodeFromID(currentEdge.v);
+        boolean res = true;
+
+        for(int i = 0; i < 5; ++i) {
+            for(int j = 0; j < 5; ++j) {
+                Randomization.Node new_u = new Randomization.Node(u.x + this.xx_2[i], u.y + this.yy_2[i]);
+                Randomization.Node new_v = new Randomization.Node(v.x + this.xx_2[j], v.y + this.yy_2[j]);
+                if (!new_u.equals(new_v) && this.check(new_u) && this.check(new_v)) {
+                    res = res && !dsu.isSame(this.GetIDFromNode(new_u), this.GetIDFromNode(new_v));
+                }
             }
         }
+
         return res;
     }
 
+    void ConnectToNeighbors(char[][] result, DSU dsu, Randomization.Edge currentEdge) {
+        Randomization.Node[] nodes = new Randomization.Node[]{this.GetNodeFromID(currentEdge.u), this.GetNodeFromID(currentEdge.v), this.GetNodeFromID(currentEdge.mid)};
 
-    public ArrayList<Edge> GenerteEdges(int n)
-    {
-        boolean used [][]= new boolean [n*n][n*n];
-        ArrayList<Edge>result =new ArrayList<Edge>();
-//        Random rand = new Random();
-        for(int i =0 ;i < n ;i++)
-        {
-            for(int j =0 ;j  <n ;j++) {
+        for(int i = 0; i < 3; ++i) {
+            for(int k = 0; k < 4; ++k) {
+                int new_x = nodes[i].x + this.xx_2[k];
+                int new_y = nodes[i].y + this.yy_2[k];
+                if (this.check(new_x, new_y) && result[new_x][new_y] == '.') {
+                    dsu.merge(this.GetIDFromNode(nodes[i]), this.GetIDFromNode(new Randomization.Node(new_x, new_y)));
+                }
+            }
+        }
 
-                for (int k =0 ;k < 4 ;k++){
-                    int x = i + xx[k];
-                    int y = j + yy[k];
-                    if(x >=0 && x < n && y >=0 && y < n && !used[GetIDFromNode(new Node(i ,j ))][GetIDFromNode(new Node(x , y ))]){
-                        used[GetIDFromNode(new Node(i ,j ))][GetIDFromNode(new Node(x , y ))]=true ;
-                        used[GetIDFromNode(new Node(x , y ))][GetIDFromNode(new Node(i ,j ))]=true ;
-                        int mid_x = i+xx_2[k] ,mid_y = j+yy_2[k];
+    }
 
-                        result.add(new Edge(GetIDFromNode(new Node(i, j )) ,GetIDFromNode(new Node(x , y ))  , GetIDFromNode(new Node(mid_x ,mid_y))));
+    public ArrayList<Randomization.Edge> GenerteEdges(int n) {
+        boolean[][] used = new boolean[n * n][n * n];
+        ArrayList<Randomization.Edge> result = new ArrayList();
+
+        for(int i = 0; i < n; ++i) {
+            for(int j = 0; j < n; ++j) {
+                for(int k = 0; k < 4; ++k) {
+                    int x = i + this.xx[k];
+                    int y = j + this.yy[k];
+                    if (this.check(x, y) && !used[this.GetIDFromNode(new Randomization.Node(i, j))][this.GetIDFromNode(new Randomization.Node(x, y))]) {
+                        used[this.GetIDFromNode(new Randomization.Node(i, j))][this.GetIDFromNode(new Randomization.Node(x, y))] = true;
+                        used[this.GetIDFromNode(new Randomization.Node(x, y))][this.GetIDFromNode(new Randomization.Node(i, j))] = true;
+                        int mid_x = i + this.xx_2[k];
+                        int mid_y = j + this.yy_2[k];
+                        result.add(new Randomization.Edge(this.GetIDFromNode(new Randomization.Node(i, j)), this.GetIDFromNode(new Randomization.Node(x, y)), this.GetIDFromNode(new Randomization.Node(mid_x, mid_y))));
                     }
                 }
             }
         }
+
         return result;
     }
 
+    private class Edge {
+        private int u;
+        private int v;
+        private int mid;
+
+        public Edge(int u, int v, int mid) {
+            this.u = u;
+            this.v = v;
+            this.mid = mid;
+        }
+    }
+
+    private class Node {
+        public int x;
+        public int y;
+
+        public Node(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public boolean equals(Randomization.Node other) {
+            return other.x == this.x && other.y == this.y;
+        }
+    }
 }
+

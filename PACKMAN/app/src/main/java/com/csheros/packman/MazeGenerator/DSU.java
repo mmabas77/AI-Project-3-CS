@@ -33,9 +33,8 @@ public class DSU {
         v =parentOf(v) ;
         if (isSame(u,v))
             return;
-        //I don't best complexity of merging but randomization make it well
+        //Not the best complexity of merging but randomization make it well :)
         int toss = rand.nextInt(2);
-        System.out.println(toss);
         if(toss==1){
             parent[u] =parent[v];
             size[v]+=size[u];
