@@ -100,7 +100,7 @@ public class MainFragment extends Fragment {
         mViewModel.getNodeMapLiveData().observe(getViewLifecycleOwner(),
                 nodeMap -> mViewModel.startGame(
                         nodeMap,
-                        2,
+                        3,
                         10,
                         20,
                         200
