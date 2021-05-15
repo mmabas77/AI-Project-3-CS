@@ -21,7 +21,7 @@ public class Dialogs {
                     "\n" +
                     "I challenge you to win level one :-P" +
                     "\n" +
-                    "Try it now" +
+                    "Try it now : " +
                     "https://play.google.com/store/apps/details?id=" +
                     Dialogs.class.getPackage().getName();
 
