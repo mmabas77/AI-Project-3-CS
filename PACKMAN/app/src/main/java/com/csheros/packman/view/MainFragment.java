@@ -1,6 +1,7 @@
 package com.csheros.packman.view;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -127,21 +128,21 @@ public class MainFragment extends Fragment {
 
     private void playSounds(GameState gameState) {
 
-        if(gameState.isAteMasterPoint())
-            playSound(R.raw.hala2_alieh,VolumeType.HIGH);
+        if (gameState.isAteMasterPoint())
+            playSound(R.raw.hala2_alieh, VolumeType.HIGH);
 
         if (gameState.isAtePoint())
-            playSound(R.raw.eat,VolumeType.LOW);
+            playSound(R.raw.eat, VolumeType.LOW);
 
         if (gameState.isPackManDied())
-            playSound(R.raw.death,VolumeType.HIGH);
+            playSound(R.raw.death, VolumeType.HIGH);
 
         if (evilMoveSoundsOn)
-            playSound(R.raw.ghost,VolumeType.LOWER);
+            playSound(R.raw.ghost, VolumeType.LOWER);
     }
 
     enum VolumeType {
-        HIGH , LOW, LOWER
+        HIGH, LOW, LOWER
     }
 
     private void playSound(int id, VolumeType volumeType) {
@@ -244,6 +245,7 @@ public class MainFragment extends Fragment {
             dialog.setContentView(R.layout.loser_dialog);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             ImageView replay = dialog.findViewById(R.id.replay);
+            ImageView share = dialog.findViewById(R.id.share);
 
             //show level in loser dialog
             TextView txtlevel_dialog = dialog.findViewById(R.id.level_loserDialog);
@@ -259,6 +261,18 @@ public class MainFragment extends Fragment {
             replay.setOnClickListener(v -> {
                 mViewModel.createNodeMap(mViewModel.getCurrentLevelLiveData().getValue());
                 dialog.dismiss();
+            });
+            share.setOnClickListener(v -> {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Checkout this awesome game : " +
+                        "\n" +
+                        "https://play.google.com/store/apps/details?id=" +
+                        getContext().getApplicationContext().getPackageName());
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, "Send MSG");
+                startActivity(shareIntent);
             });
             dialog.show();
         } else if (gameState.isGameFinished()) {
