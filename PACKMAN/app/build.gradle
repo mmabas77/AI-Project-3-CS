@@ -7,6 +7,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
+        // Todo : Change this id for the right id
         applicationId "com.csheros.packman"
         minSdkVersion 16
         targetSdkVersion 30
