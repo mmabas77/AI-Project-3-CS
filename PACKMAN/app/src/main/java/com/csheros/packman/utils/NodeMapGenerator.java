@@ -12,25 +12,76 @@ import java.util.Scanner;
 
 public interface NodeMapGenerator {
 
-    static NodeMap createDynamicNodeMap(int level) {
-        // Todo : Implement this
-        return createFromTxt(
-                        "............|............\n" +
-                        "..........--|--..........\n" +
-                        "...|........x........|...\n" +
-                        "........----|----........\n" +
-                        "...|.................|...\n" +
-                        "............|............\n" +
-                        "......---.0.|.0.--.......\n" +
-                        "............|............\n" +
-                        "..........--|--..........\n" +
-                        "...|.................|...\n" +
-                        "........----|----........\n" +
-                        "..0|........p........|0..\n" +
-                        "............|............\n" +
-                        "......---...|...--......."
+    String LEVEL_1 = "..|||||||||||||||||||\n" +
+            "..|...|...|.|.......|\n" +
+            "|.|.|.|||.|.|.|.|||||\n" +
+            "|.|.|.....|...|.....|\n" +
+            "|.|.|.|||.|||||||.|.|\n" +
+            "|.|.|.|.....|...|.|.|\n" +
+            "|.|||.|||||.|.|.|||.|\n" +
+            "|.....|.......|.....|\n" +
+            "|.|.|||||||||.|||||||\n" +
+            "|.|.|.....|.........|\n" +
+            "|.|||.|||.|||||||||.|\n" +
+            "|...|...|.|...|.....|\n" +
+            "|.|.|.|||||||.|||||.|\n" +
+            "|.|.|...|...|...|...|\n" +
+            "|||||.|||||.|||.|.|||\n" +
+            "|.....|.....|.......|\n" +
+            "|.|.|||||||.|||||||.|\n" +
+            "|.|.................|\n" +
+            "|.|||||.|||.|||.|||.|\n" +
+            "|.|.....|...|...|...\n" +
+            "|||||||||||||||||||.\n";
 
-        );
+    String LEVEL_DEFAULT = "............|............\n" +
+            "..........--|--..........\n" +
+            "...|........x........|...\n" +
+            "........----|----........\n" +
+            "...|.................|...\n" +
+            "............|............\n" +
+            "......---.0.|.0.--.......\n" +
+            "............|............\n" +
+            "..........--|--..........\n" +
+            "...|.................|...\n" +
+            "........----|----........\n" +
+            "..0|........p........|0..\n" +
+            "............|............\n" +
+            "......---...|...--.......";
+
+    static NodeMap createDynamicNodeMap(int level) {
+        switch (level) {
+//            case 1:
+//                return createFromMazeTxt(LEVEL_1);
+            default:
+                return createFromTxt(LEVEL_DEFAULT);
+        }
+    }
+
+    static NodeMap createFromMazeTxt(String txt) {
+        char[] mazeCharArray = txt.toCharArray();
+        int numOfAgents = txt.length() / 300;
+        int numOfMasterPoints = numOfAgents * 4;
+        // Add agents
+        int agentsIndexStart = txt.length() / 4;
+        int firstDotForAgents = txt.indexOf('.', agentsIndexStart);
+        for (int i = 0; i < numOfAgents; i++) {
+            mazeCharArray[firstDotForAgents++] = 'x';
+        }
+
+        // Add MasterPoints
+        int masterPointsIndexStart = txt.length() / numOfMasterPoints;
+        int firstDotForMasterPoints = txt.indexOf('.', masterPointsIndexStart);
+        for (int i = 0; i < numOfMasterPoints; i++) {
+            mazeCharArray[firstDotForMasterPoints] = '0';
+            firstDotForMasterPoints += masterPointsIndexStart;
+        }
+
+        int packManIndexStart = txt.length() * 3 / 4;
+        int firstDotForPackMan = txt.indexOf('.', packManIndexStart);
+        mazeCharArray[firstDotForPackMan] = 'p';
+
+        return createFromTxt(String.valueOf(mazeCharArray));
     }
 
     static NodeMap createFromTxt(String txt) {
@@ -42,7 +93,8 @@ public interface NodeMapGenerator {
             String lineStr = scanner.nextLine();
             nodes.add(getCreaturesNodesFromLine(lineStr, nodeMap, row++));
         }
-        nodeMap.setMapSize(new MapSize(nodes.get(0).length, nodes.size()));
+        nodeMap.setMapSize(new MapSize(nodes.get(0).length - 1,
+                nodes.size() - 1));
         return nodeMap;
     }
 
