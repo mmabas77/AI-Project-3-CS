@@ -15,16 +15,18 @@ import org.jetbrains.annotations.NotNull;
 
 public class Dialogs {
 
-    public static final String SHARE_TITLE = "Share The Game";
-    public static final String SHARE_MSG =
+    private static final String SHARE_TITLE = "Share The Game";
+    private static final String SHARE_MSG =
             "A pack-man game with one agent only supplied with AI .." +
                     "\n" +
                     "I challenge you to win level one :-P" +
                     "\n" +
                     "Try it now : " +
-                    "https://play.google.com/store/apps/details?id=" +
-                    Dialogs.class.getPackage().getName();
+                    "https://play.google.com/store/apps/details?id=";
 
+    public static String getShareMsg(Context context) {
+        return SHARE_MSG + context.getPackageName();
+    }
 
     public static Dialog getWinnerDialog(int level,
                                          int score,
@@ -98,7 +100,7 @@ public class Dialogs {
     private static void shareApp(Context context) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, SHARE_MSG);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getShareMsg(context));
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, SHARE_TITLE);
         context.startActivity(shareIntent);
