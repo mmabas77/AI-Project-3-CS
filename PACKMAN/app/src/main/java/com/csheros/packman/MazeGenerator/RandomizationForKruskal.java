@@ -2,10 +2,14 @@
 package com.csheros.packman.MazeGenerator ;
 
 
+import com.csheros.packman.MazeGenerator.Util.DSU;
+import com.csheros.packman.MazeGenerator.Util.Edge;
+import com.csheros.packman.MazeGenerator.Util.Node;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class RandomizationForKruskal {
+public class RandomizationForKruskal implements GetMaze{
     private int n;
     private int[] xx = new int[]{0, 0, -2, 2, 0};
     private int[] yy = new int[]{2, -2, 0, 0, 0};
@@ -22,6 +26,12 @@ public class RandomizationForKruskal {
 
     private int GetIDFromNode(Node s) {
         return this.n * s.x + s.y;
+    }
+
+
+    @Override
+    public char[][] GetRandomMaze(int mazeHeight, int mazeWeight) {
+        return new char[0][];
     }
 
     public char[][] GetMap() {
@@ -128,6 +138,7 @@ public class RandomizationForKruskal {
 
         return result;
     }
+
 
 }
 
