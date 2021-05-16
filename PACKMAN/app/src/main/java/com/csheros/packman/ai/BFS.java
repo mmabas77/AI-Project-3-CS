@@ -122,12 +122,6 @@ public class BFS implements NextMoveCalculator {
                 current = current.parent;
             }
             if (pathNodes.size() > 0) {
-                System.out.println("Path ...");
-                for (DFSNode pathNode : pathNodes) {
-                    System.out.println("Row:" + pathNode.getState().getRow() +
-                            "  Col:" + pathNode.getState().getCol() +
-                            " Direction:" + pathNode.getAction());
-                }
                 return pathNodes.pop().getAction();
             }
             return Direction.STAND_STILL;
