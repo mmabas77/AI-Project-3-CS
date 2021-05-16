@@ -36,20 +36,12 @@ public class Creature {
         );
     }
 
-    private Direction getNextDirection() {
+    protected Direction getNextDirection() {
         switch (this.getType()) {
             case PACK_MAN:
                 currentDirection = getNode().getNodeMap().getPackManDirection();
                 if (currentDirection == null)
                     currentDirection = Direction.STAND_STILL;
-                break;
-            case EVIL_CREATURE:
-                // Todo : Implement this!
-                currentDirection = new BFS().getNextMoveDirection(
-                        getNode().getPosition(),
-                        getNode().getNodeMap().getPackManPosition(),
-                        node.getNodeMap()
-                );
                 break;
             default:
                 currentDirection = Direction.STAND_STILL;

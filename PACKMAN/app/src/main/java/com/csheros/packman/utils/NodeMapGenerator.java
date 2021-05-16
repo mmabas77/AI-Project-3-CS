@@ -1,6 +1,7 @@
 package com.csheros.packman.utils;
 
 import com.csheros.packman.engine.Creature;
+import com.csheros.packman.engine.EvilCreature;
 import com.csheros.packman.engine.MapSize;
 import com.csheros.packman.engine.Node;
 import com.csheros.packman.engine.NodeMap;
@@ -115,7 +116,8 @@ public interface NodeMapGenerator {
      * Use these symbols for defining creatures
      * . for POINT
      * 0 for Master Point
-     * x for evil creature
+     * x or r for (random) evil creature
+     * b for (BFS) evil creature
      * - or | for BLOCK
      * p for Pack-Man
      */
@@ -133,7 +135,11 @@ public interface NodeMapGenerator {
                     nodes[i].addCreature(new Creature(Creature.Type.BLOCK));
                     break;
                 case 'x':
-                    nodes[i].addCreature(new Creature(Creature.Type.EVIL_CREATURE));
+                case 'r':
+                    nodes[i].addCreature(new EvilCreature(EvilCreature.PathAlgo.RANDOM));
+                    break;
+                case 'b':
+                    nodes[i].addCreature(new EvilCreature(EvilCreature.PathAlgo.BFS));
                     break;
                 case 'p':
                     nodes[i].addCreature(new Creature(Creature.Type.PACK_MAN));
