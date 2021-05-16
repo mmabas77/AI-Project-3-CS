@@ -61,7 +61,6 @@ public class StarterFragment extends Fragment {
         mViewModel = new ViewModelProvider.
                 AndroidViewModelFactory(getActivity().getApplication())
                 .create(StarterFragmentViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }
