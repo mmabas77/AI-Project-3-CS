@@ -39,6 +39,7 @@ public class NodeMap {
                 .insideMap(nodePosition.getCol(), nodePosition.getRow());
         if (!allowedInSize)
             return false;
+        
         boolean hasBlock = getNodeByPosition(nodePosition).hasBlock();
 
         return !hasBlock;
