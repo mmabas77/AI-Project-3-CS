@@ -1,11 +1,12 @@
 package com.csheros.packman.engine;
 
 import com.csheros.packman.ai.BFS;
+import com.csheros.packman.ai.DFS;
 import com.csheros.packman.utils.Direction;
 
 public class EvilCreature extends Creature {
     public enum PathAlgo {
-        RANDOM, BFS
+        RANDOM, BFS,DFS
     }
 
     private final PathAlgo pathAlgo;
@@ -20,6 +21,13 @@ public class EvilCreature extends Creature {
         switch (pathAlgo) {
             case BFS:
                 setCurrentDirection(new BFS().getNextMoveDirection(
+                        getNode().getPosition(),
+                        getNode().getNodeMap().getPackManPosition(),
+                        getNode().getNodeMap()
+                ));
+                break;
+            case DFS:
+                setCurrentDirection(new DFS().getNextMoveDirection(
                         getNode().getPosition(),
                         getNode().getNodeMap().getPackManPosition(),
                         getNode().getNodeMap()
