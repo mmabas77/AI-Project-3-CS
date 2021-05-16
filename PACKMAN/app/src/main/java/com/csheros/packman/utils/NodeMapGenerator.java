@@ -47,7 +47,7 @@ public interface NodeMapGenerator {
             "........----|----........\n" +
             "..0|........p........|0..\n" +
             "............|............\n" +
-            "......---...|...--.......";
+            "......---...|...--......x";
 
     static NodeMap createDynamicNodeMap(int level) {
         switch (level) {
@@ -93,8 +93,8 @@ public interface NodeMapGenerator {
             String lineStr = scanner.nextLine();
             nodes.add(getCreaturesNodesFromLine(lineStr, nodeMap, row++));
         }
-        nodeMap.setMapSize(new MapSize(nodes.get(0).length - 1,
-                nodes.size() - 1));
+        nodeMap.setMapSize(new MapSize(nodes.get(0).length,
+                nodes.size()));
         return nodeMap;
     }
 
