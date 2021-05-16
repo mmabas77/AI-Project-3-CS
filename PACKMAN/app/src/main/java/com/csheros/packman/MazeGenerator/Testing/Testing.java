@@ -31,7 +31,7 @@ public class Testing {
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        RandomizationForKruskal rand = new RandomizationForKruskal(n);
+        RandomizationForKruskal rand = new RandomizationForKruskal(n, n);
         char res[][] = rand.GetMap();
         for(int i =0 ;i  < res.length ;i++){
             for(int j =0 ;j < res[0].length ;j++){
