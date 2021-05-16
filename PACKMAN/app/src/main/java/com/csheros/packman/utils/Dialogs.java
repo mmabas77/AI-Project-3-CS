@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.csheros.packman.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -28,70 +30,61 @@ public class Dialogs {
         return SHARE_MSG + context.getPackageName();
     }
 
-    public static Dialog getWinnerDialog(int level,
-                                         int score,
-                                         View.OnClickListener onNextClickListener,
-                                         Context context) {
-        Dialog dialog = generateDialog(context, R.layout.winner_dialog);
+    public static Dialog getWinnerOrLooserDialog(
+            int level,
+            int score,
+            boolean winner,
+            View.OnClickListener onNextOrReplayClickListener,
+            Context context
+    ) {
+
+        Dialog dialog = generateDialog(context);
         setDialogStatistics(
                 level,
                 score,
-                dialog,
-                R.id.level_winnerDialog,
-                R.id.score_winnerDialog
+                dialog
         );
-
         // Implement nextLevel
-        ImageView nextLevel = dialog.findViewById(R.id.nextLevel);
-        ImageView share = dialog.findViewById(R.id.winner_share);
-        nextLevel.setOnClickListener(v -> {
-            onNextClickListener.onClick(v);
-            dialog.dismiss();
-        });
-        share.setOnClickListener(v -> shareApp(context));
-        return dialog;
-    }
-
-    public static Dialog getLooserDialog(int level,
-                                         int score,
-                                         View.OnClickListener onReplayClickListener,
-                                         Context context) {
-        Dialog dialog = generateDialog(context, R.layout.loser_dialog);
-        setDialogStatistics(
-                level,
-                score,
-                dialog,
-                R.id.level_loserDialog,
-                R.id.score_loserDialog
-        );
-
-        ImageView replay = dialog.findViewById(R.id.replay);
+        ImageView nextOrReplay = dialog.findViewById(R.id.nextOrReplay);
         ImageView share = dialog.findViewById(R.id.share);
-
-        // Implement replay
-        replay.setOnClickListener(v -> {
-            onReplayClickListener.onClick(v);
+        nextOrReplay.setOnClickListener(v -> {
+            onNextOrReplayClickListener.onClick(v);
             dialog.dismiss();
         });
         share.setOnClickListener(v -> shareApp(context));
 
+        if (winner) {
+            TextView headingTxt = dialog.findViewById(R.id.headingTxt);
+            ImageView gameStateImg = dialog.findViewById(R.id.gameStateImg);
+
+            headingTxt.setText(context.getString(R.string.win_game));
+            gameStateImg.setImageResource(R.drawable.cup_3);
+            nextOrReplay.setImageResource(R.drawable.next_icon);
+            nextOrReplay.setColorFilter(
+                    ContextCompat.getColor(context, R.color.colorPrimary)
+            );
+        }
         return dialog;
     }
 
-    private static void setDialogStatistics(int level, int score, Dialog dialog, int levelId, int scoreId) {
+
+    private static void setDialogStatistics(int level,
+                                            int score,
+                                            Dialog dialog
+    ) {
         // Set Level
-        TextView txtLevel = dialog.findViewById(levelId);
+        TextView txtLevel = dialog.findViewById(R.id.level);
         txtLevel.setText(String.valueOf(level));
         // Set Score
-        TextView txtScore = dialog.findViewById(scoreId);
+        TextView txtScore = dialog.findViewById(R.id.score);
         txtScore.setText(String.valueOf(score));
     }
 
     @NotNull
-    private static Dialog generateDialog(Context context, int dialogContentView) {
+    private static Dialog generateDialog(Context context) {
         Dialog dialog = new Dialog(context);
         dialog.setCancelable(false);
-        dialog.setContentView(dialogContentView);
+        dialog.setContentView(R.layout.winner_loser_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return dialog;
     }

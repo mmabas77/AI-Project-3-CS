@@ -242,16 +242,18 @@ public class MainFragment extends Fragment {
         int level = mViewModel.getCurrentLevelLiveData().getValue();
         int score = mViewModel.getGameStateLiveData().getValue().getEngine().getScore();
         if (gameState.isPackManDied()) {
-            Dialogs.getLooserDialog(
+            Dialogs.getWinnerOrLooserDialog(
                     level,
                     score,
+                    false,
                     v -> mViewModel.createNodeMap(level),
                     getContext()
             ).show();
         } else if (gameState.isGameFinished()) {
-            Dialogs.getWinnerDialog(
+            Dialogs.getWinnerOrLooserDialog(
                     level,
                     score,
+                    true,
                     v -> mViewModel.createNodeMap(level + 1),
                     getContext()
             ).show();

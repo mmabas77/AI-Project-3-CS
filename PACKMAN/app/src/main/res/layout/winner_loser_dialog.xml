@@ -14,7 +14,7 @@
 
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/headingTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -28,17 +28,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/gameStateImg"
             android:layout_width="wrap_content"
             android:layout_height="96dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/textView"
-            app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="@+id/headingTxt"
+            app:layout_constraintStart_toStartOf="@+id/headingTxt"
+            app:layout_constraintTop_toBottomOf="@+id/headingTxt"
             app:srcCompat="@drawable/game_over_alt" />
 
         <ImageView
-            android:id="@+id/replay"
+            android:id="@+id/nextOrReplay"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginTop="16dp"
@@ -46,13 +46,13 @@
             android:layout_marginRight="16dp"
             android:background="@color/white"
             android:clickable="true"
+            android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/share"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/gameStateImg"
             app:srcCompat="@drawable/ic_replay"
             app:tint="@color/colorSecondary"
-            tools:ignore="MissingConstraints,VectorDrawableCompat"
-            android:focusable="true" />
+            tools:ignore="MissingConstraints,VectorDrawableCompat" />
 
         <ImageView
             android:id="@+id/share"
@@ -62,24 +62,24 @@
             android:clickable="true"
             android:rotation="180"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="@+id/gameStateImg"
+            app:layout_constraintTop_toBottomOf="@+id/gameStateImg"
             app:srcCompat="@drawable/ic_share"
             app:tint="@android:color/holo_green_dark"
             android:focusable="true" />
 
         <TextView
-            android:id="@+id/level_loserDialog"
+            android:id="@+id/level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/score_loserDialog"
-            app:layout_constraintTop_toTopOf="@+id/textView7" />
+            app:layout_constraintStart_toStartOf="@+id/score"
+            app:layout_constraintTop_toTopOf="@+id/levelFinalTxt" />
 
         <TextView
-            android:id="@+id/score_loserDialog"
+            android:id="@+id/score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -87,11 +87,11 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/textView6"
-            app:layout_constraintTop_toTopOf="@+id/textView6" />
+            app:layout_constraintStart_toEndOf="@+id/scoreFinalTxt"
+            app:layout_constraintTop_toTopOf="@+id/scoreFinalTxt" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/scoreFinalTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -100,11 +100,11 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintStart_toStartOf="@+id/gameStateImg"
+            app:layout_constraintTop_toBottomOf="@+id/gameStateImg" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/levelFinalTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -113,8 +113,8 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textView6"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintStart_toStartOf="@+id/scoreFinalTxt"
+            app:layout_constraintTop_toBottomOf="@+id/scoreFinalTxt" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
