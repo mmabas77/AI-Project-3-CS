@@ -82,7 +82,7 @@ public class RandomizationForKruskal extends GetMaze{
         return res;
     }
 
-    void ConnectToNeighbors(char[][] result, DSU dsu, Edge currentEdge) {
+    private void ConnectToNeighbors(char[][] result, DSU dsu, Edge currentEdge) {
         Node[] nodes = new Node[]{Node.GetNodeFromID(currentEdge.u,mazeHeight ,mazeWeight), Node.GetNodeFromID(currentEdge.v,mazeHeight ,mazeWeight), Node.GetNodeFromID(currentEdge.mid,mazeHeight ,mazeWeight)};
 
         for(int i = 0; i < 3; ++i) {
@@ -96,7 +96,7 @@ public class RandomizationForKruskal extends GetMaze{
         }
     }
 
-    public ArrayList<Edge> GenerteEdges() {
+    private ArrayList<Edge> GenerteEdges() {
         boolean[][] used = new boolean[mazeHeight][mazeWeight];
         ArrayList<Edge> result = new ArrayList();
 
@@ -118,7 +118,7 @@ public class RandomizationForKruskal extends GetMaze{
 
         return result;
     }
-    
+
 
 }
 
