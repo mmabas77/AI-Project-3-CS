@@ -1,4 +1,4 @@
-package com.csheros.packman.MazeGenerator;
+package com.csheros.packman.MazeGenerator.Util;
 
 import com.csheros.packman.ai.AlgoNode;
 

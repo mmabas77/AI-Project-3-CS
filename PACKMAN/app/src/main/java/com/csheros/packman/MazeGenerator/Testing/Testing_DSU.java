@@ -1,55 +1,44 @@
-package com.csheros.packman.MazeGenerator ;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
+package com.csheros.packman.MazeGenerator.Testing;
+
+
+import com.csheros.packman.MazeGenerator.Util.DSU;
+
+import java.io.*;
 import java.util.StringTokenizer;
 
-public class Testing {
-
-    private static int  xx[]={1 , -1 ,0 ,0 };
-    private static int yy[]={0 , 0 ,1 ,-1 };
-
-    public static boolean Go(char arr [][] , int x ,int y ,int tar_x ,int tar_y){
-        if(x>=arr.length || x <0 ||y>=arr.length || y <0 )
-            return false;
-        if(arr[x][y]!='.') return false;
-        if (x==tar_x && y==tar_y)
-           return true;
-        boolean res =false;
-        for(int i =0 ;i  <4 ;i++){
-            res = res || Go(arr , x+xx[i] ,y+yy[i] , tar_x ,tar_y);
-        }
-        return res;
-
-    }
+public class Testing_DSU {
 
 
+    public static void main(String[] args) throws IOException{
 
-    public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        Randomization rand = new Randomization(n);
-        char res[][] = rand.GetMap();
-        for(int i =0 ;i  < res.length ;i++){
-            for(int j =0 ;j < res[0].length ;j++){
-                System.out.print(res[i][j]);
+        File file = new File("/media/abdelrahmankhaled/New Volume/Projects/Ac/backman/back/out/production/back/com/company/in.txt");
+        if (file.exists()) {
+            InputStream in = new FileInputStream(file);
+            int n, m;
+            Scanner sc = new Scanner(in);
+
+            n = sc.nextInt(); m = sc.nextInt();
+            System.out.println(n +" "+m);
+
+            DSU dsu = new DSU(n);
+            for (int i = 0; i < m; i++) {
+                int u = sc.nextInt(), v = sc.nextInt();
+                System.out.println(u +" "+v);
+                System.out.println(dsu.isSame(u-1, v-1 ));
+                dsu.merge(u-1 , v-1 );
             }
-            System.out.println();
-        }
-        ArrayList<Pair>arr= new ArrayList<Pair>();
-        for(int i =0 ;i < n ;i+=1)
-                for(int j =0 ;j < n ;j++)
-                    if(res[i][j]=='.')
-                        arr.add(new Pair(i , j ));
-        for(Pair cur : arr){
-            for(Pair tar : arr)
-                System.out.println(Go(res ,cur.ff,cur.ss , tar.ff ,tar.ss ));
-        }
+            int arr[] = dsu.getParent();
+            int sz[] = dsu.getSize();
+            for (int i = 0; i < n; i += 1) {
+                System.out.print(arr[i] + " ");
+            }
 
 
+        }else {
+            System.out.println("No file");
+        }
     }
+
     static class Scanner {
         StringTokenizer st;
         BufferedReader br;
@@ -126,3 +115,4 @@ public class Testing {
 
 
 }
+
