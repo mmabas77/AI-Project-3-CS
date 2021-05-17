@@ -9,14 +9,11 @@ import java.util.Random;
 public class RandomizationForPrim extends GetMaze {
 
     Random rand;
-    int xx[]={1 , -1 , 0 ,0 };
-    int yy[]={0 , 0 , 1 ,-1 };
-    int xx2[]={2 , -2 , 0 ,0 };
-    int yy2[]={0 , 0 , 2 ,-2 };
 
-    public RandomizationForPrim(int mazeHeight , int mazeWeight ){
+    public RandomizationForPrim(int mazeHeight , int mazeWeight , int squareLength){
         this.mazeHeight=mazeHeight;
         this.mazeWeight=mazeWeight;
+        this.squareLength = squareLength;
         rand = new Random();
 
     }
@@ -34,7 +31,6 @@ public class RandomizationForPrim extends GetMaze {
                 arr[i][j]='.';
 
         Node root =new Node (rand.nextInt(mazeHeight) , rand.nextInt(mazeWeight));
-
         ArrayList<Integer> set= new ArrayList<Integer>();
         set.add(Node.GetIDFromNode(root , mazeHeight,mazeWeight ) );
 
@@ -46,8 +42,7 @@ public class RandomizationForPrim extends GetMaze {
 
             for(Node child : cur_node.childs()){
                 if(child.check(mazeHeight ,mazeWeight )){
-                    if(arr[child.x][child.y]!='*')
-                    {
+                    if(arr[child.x][child.y]!='*' ) {
                         set.add(Node.GetIDFromNode(child , mazeHeight,mazeWeight));
                         if(child.prev != null)
                             arr[child.prev.x][child.prev.y]='*';
@@ -55,12 +50,24 @@ public class RandomizationForPrim extends GetMaze {
                     }
                 }
             }
+
         }
+        DrawRectangel(arr);
 
 
         return arr;
     }
+    private void DrawRectangel(char[][]arr){
+        int midHeight = mazeHeight/2 ;
+        int midweight = mazeWeight/2 ;
+        double midSquareLemgth = ((double)squareLength/2) ;
+        for(int i = Math.max( midHeight - (int)Math.ceil(midSquareLemgth) , 0 ) ;i < Math.min(midHeight+(int)Math.floor(midSquareLemgth) , mazeHeight) ;i++ ){
+            for(int j =Math.max (midweight -(int)Math.ceil(midSquareLemgth) , 0) ;j <Math.min( midweight+(int)Math.floor(midSquareLemgth) ,mazeWeight) ;j++){
+                arr[i][j]='#';
+            }
+        }
 
+    }
 
     private void print(char[][]arr){
         for(int i =0 ;i  <arr.length ;i++){
@@ -70,5 +77,4 @@ public class RandomizationForPrim extends GetMaze {
             System.out.println();
         }
     }
-
 }

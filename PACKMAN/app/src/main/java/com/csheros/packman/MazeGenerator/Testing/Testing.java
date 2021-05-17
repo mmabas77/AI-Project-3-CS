@@ -20,7 +20,7 @@ public class Testing {
             return false;
         if(arr[x][y]!='.') return false;
         if (x==tar_x && y==tar_y)
-           return true;
+            return true;
         boolean res =false;
         for(int i =0 ;i  <4 ;i++){
             res = res || Go(arr , x+xx[i] ,y+yy[i] , tar_x ,tar_y);
@@ -31,8 +31,9 @@ public class Testing {
 
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        RandomizationForPrim prim = new RandomizationForPrim(10 ,20);
+        RandomizationForPrim prim = new RandomizationForPrim(30 ,30, 10);
+        RandomizationForKruskal kr = new RandomizationForKruskal(52 ,52);
+
         char res[][] = prim.GetRandomMaze();
         for(int i =0 ;i  < res.length ;i++){
             for(int j =0 ;j < res[0].length ;j++){
