@@ -27,7 +27,7 @@ public class RandomizationForPrim extends GetMaze {
     }
 
 
-    public char[][]generate(){
+    private char[][]generate(){
         char[][]arr= new char[mazeHeight][mazeWeight];
         for(int i =0 ;i <mazeHeight ;i++)
             for(int j=0 ;j< mazeWeight ;j++)
@@ -36,7 +36,7 @@ public class RandomizationForPrim extends GetMaze {
         Node root =new Node (rand.nextInt(mazeHeight) , rand.nextInt(mazeWeight));
 
         ArrayList<Integer> set= new ArrayList<Integer>();
-        set.add(Node.GetIDFromNode(root , mazeHeight,mazeHeight ) );
+        set.add(Node.GetIDFromNode(root , mazeHeight,mazeWeight ) );
 
         while(!set.isEmpty()){
             Collections.shuffle(set);
@@ -48,9 +48,9 @@ public class RandomizationForPrim extends GetMaze {
                 if(child.check(mazeHeight ,mazeWeight )){
                     if(arr[child.x][child.y]!='*')
                     {
-                        set.add(Node.GetIDFromNode(child , mazeHeight,mazeHeight));
+                        set.add(Node.GetIDFromNode(child , mazeHeight,mazeWeight));
                         if(child.prev != null)
-                        arr[child.prev.x][child.prev.y]='*';
+                            arr[child.prev.x][child.prev.y]='*';
                         arr[child.x][child.y]='*';
                     }
                 }
@@ -70,6 +70,5 @@ public class RandomizationForPrim extends GetMaze {
             System.out.println();
         }
     }
-
 
 }

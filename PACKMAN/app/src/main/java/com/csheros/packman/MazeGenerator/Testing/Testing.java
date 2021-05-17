@@ -1,5 +1,6 @@
 package com.csheros.packman.MazeGenerator.Testing;
 import com.csheros.packman.MazeGenerator.RandomizationForKruskal;
+import com.csheros.packman.MazeGenerator.RandomizationForPrim;
 import com.csheros.packman.MazeGenerator.Util.Pair;
 
 import java.io.BufferedReader;
@@ -31,23 +32,23 @@ public class Testing {
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        RandomizationForKruskal rand = new RandomizationForKruskal(n, n);
-        char res[][] = rand.GetMap();
+        RandomizationForPrim prim = new RandomizationForPrim(10 ,20);
+        char res[][] = prim.GetRandomMaze();
         for(int i =0 ;i  < res.length ;i++){
             for(int j =0 ;j < res[0].length ;j++){
                 System.out.print(res[i][j]);
             }
             System.out.println();
         }
-        ArrayList<Pair>arr= new ArrayList<Pair>();
-        for(int i =0 ;i < n ;i+=1)
-                for(int j =0 ;j < n ;j++)
-                    if(res[i][j]=='.')
-                        arr.add(new Pair(i , j ));
-        for(Pair cur : arr){
-            for(Pair tar : arr)
-                System.out.println(Go(res ,cur.ff,cur.ss , tar.ff ,tar.ss ));
-        }
+//        ArrayList<Pair>arr= new ArrayList<Pair>();
+//        for(int i =0 ;i < n ;i+=1)
+//                for(int j =0 ;j < n ;j++)
+//                    if(res[i][j]=='.')
+//                        arr.add(new Pair(i , j ));
+//        for(Pair cur : arr){
+//            for(Pair tar : arr)
+//                System.out.println(Go(res ,cur.ff,cur.ss , tar.ff ,tar.ss ));
+//        }
 
 
     }
@@ -124,6 +125,7 @@ public class Testing {
         }
 
     }
+
 
 
 }

@@ -24,7 +24,7 @@ public class RandomizationForKruskal extends GetMaze{
         return GetMap() ;
     }
 
-    public char[][] GetMap() {
+    private char[][] GetMap() {
         char[][] result = new char[mazeHeight][mazeWeight];
 
         for(int i = 0; i < mazeHeight; ++i) {
