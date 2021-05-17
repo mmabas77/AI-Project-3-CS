@@ -12,5 +12,4 @@ public class StarterFragmentViewModel extends AndroidViewModel {
     public StarterFragmentViewModel(@NonNull @NotNull Application application) {
         super(application);
     }
-    // TODO: Implement the ViewModel
 }

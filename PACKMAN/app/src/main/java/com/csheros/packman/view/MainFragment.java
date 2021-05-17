@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.csheros.packman.Ads;
 import com.csheros.packman.R;
 import com.csheros.packman.engine.Creature;
 import com.csheros.packman.engine.Node;
@@ -249,6 +250,7 @@ public class MainFragment extends Fragment {
                     v -> mViewModel.createNodeMap(level),
                     getContext()
             ).show();
+            Ads.showAd(getActivity());
         } else if (gameState.isGameFinished()) {
             Dialogs.getWinnerOrLooserDialog(
                     level,
@@ -257,6 +259,7 @@ public class MainFragment extends Fragment {
                     v -> mViewModel.createNodeMap(level + 1),
                     getContext()
             ).show();
+            Ads.showAd(getActivity());
         }
     }
 
