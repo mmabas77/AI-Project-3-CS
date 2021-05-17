@@ -1,5 +1,7 @@
-package com.csheros.packman.MazeGenerator;
+package com.csheros.packman.MazeGenerator.Testing;
 
+
+import com.csheros.packman.MazeGenerator.Util.DSU;
 
 import java.io.*;
 import java.util.StringTokenizer;

@@ -1,4 +1,8 @@
-package com.csheros.packman.MazeGenerator ;
+package com.csheros.packman.MazeGenerator.Testing;
+import com.csheros.packman.MazeGenerator.RandomizationForKruskal;
+import com.csheros.packman.MazeGenerator.RandomizationForPrim;
+import com.csheros.packman.MazeGenerator.Util.Pair;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +20,7 @@ public class Testing {
             return false;
         if(arr[x][y]!='.') return false;
         if (x==tar_x && y==tar_y)
-           return true;
+            return true;
         boolean res =false;
         for(int i =0 ;i  <4 ;i++){
             res = res || Go(arr , x+xx[i] ,y+yy[i] , tar_x ,tar_y);
@@ -25,28 +29,27 @@ public class Testing {
 
     }
 
-
-
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        Randomization rand = new Randomization(n);
-        char res[][] = rand.GetMap();
+        RandomizationForPrim prim = new RandomizationForPrim(30 ,30, 10);
+        RandomizationForKruskal kr = new RandomizationForKruskal(52 ,52);
+
+        char res[][] = prim.GetRandomMaze();
         for(int i =0 ;i  < res.length ;i++){
             for(int j =0 ;j < res[0].length ;j++){
                 System.out.print(res[i][j]);
             }
             System.out.println();
         }
-        ArrayList<Pair>arr= new ArrayList<Pair>();
-        for(int i =0 ;i < n ;i+=1)
-                for(int j =0 ;j < n ;j++)
-                    if(res[i][j]=='.')
-                        arr.add(new Pair(i , j ));
-        for(Pair cur : arr){
-            for(Pair tar : arr)
-                System.out.println(Go(res ,cur.ff,cur.ss , tar.ff ,tar.ss ));
-        }
+//        ArrayList<Pair>arr= new ArrayList<Pair>();
+//        for(int i =0 ;i < n ;i+=1)
+//                for(int j =0 ;j < n ;j++)
+//                    if(res[i][j]=='.')
+//                        arr.add(new Pair(i , j ));
+//        for(Pair cur : arr){
+//            for(Pair tar : arr)
+//                System.out.println(Go(res ,cur.ff,cur.ss , tar.ff ,tar.ss ));
+//        }
 
 
     }
@@ -123,6 +126,7 @@ public class Testing {
         }
 
     }
+
 
 
 }
