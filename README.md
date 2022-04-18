@@ -1,5 +1,5 @@
 # AI-OS-Project-3-CS
-The main idea is to make a clone of **Bac-man** 
+The main idea is to make a clone of **Pac-man** 
 
 main game would be like this:
 
